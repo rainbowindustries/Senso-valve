@@ -8,6 +8,7 @@ import productRoutes from './src/routes/product.routes.js'
 import categoryRoutes from './src/routes/category.routes.js'
 import inquiryRoutes from './src/routes/inquiry.routes.js'
 import catalogueRoutes from './src/routes/catalogue.routes.js'
+import certificateRoutes from './src/routes/certificate.routes.js'
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/categories', categoryRoutes)
 app.use('/api/v1/inquiries', inquiryRoutes)
 app.use('/api/v1/catalogues', catalogueRoutes)
+app.use('/api/v1/certificates', certificateRoutes)
 
 // ─── Health check ──────────────────────────────────
 app.get('/health', (req, res) => {

@@ -16,7 +16,7 @@ const uploadOnCloudinary = async (localFilePath, folder = 'hammer-valve/products
         if (!localFilePath) return null
 
         const response = await cloudinary.uploader.upload(localFilePath, {
-            resource_type: 'auto',
+            resource_type: localFilePath.endsWith('.pdf') ? 'raw' : 'image',
             folder: folder
         })
 

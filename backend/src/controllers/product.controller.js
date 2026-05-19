@@ -80,6 +80,32 @@ const getProductBySlug = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, product, 'Product fetched successfully'))
 })
 
+// ─── Get Single Product by ID ──────────────────────
+const getProductById = asyncHandler(async (req, res) => {
+    const { id } = req.params
+
+    const { data: product, error } = await supabase
+        .from('products')
+        .select(`
+            *,
+            categories (
+                id,
+                name,
+                slug
+            )
+        `)
+        .eq('id', id)
+        .single()
+
+    if (error || !product) {
+        throw new ApiError(404, 'Product not found')
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, product, 'Product fetched successfully'))
+})
+
 // ─── Create Product ────────────────────────────────
 const createProduct = asyncHandler(async (req, res) => {
 
@@ -370,5 +396,6 @@ export {
     createProduct,
     updateProduct,
     deleteProductImage,
-    deleteProduct
+    deleteProduct,
+    getProductById
 }

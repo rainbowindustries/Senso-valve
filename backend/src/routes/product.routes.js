@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
     getAllProducts,
     getProductBySlug,
+    getProductById,        // ← add this
     createProduct,
     updateProduct,
     deleteProduct,
@@ -14,6 +15,7 @@ const router = Router()
 
 // Public routes
 router.get('/', getAllProducts)
+router.get('/id/:id', getProductById)    // ← add this BEFORE /:slug
 router.get('/:slug', getProductBySlug)
 
 // Protected admin routes

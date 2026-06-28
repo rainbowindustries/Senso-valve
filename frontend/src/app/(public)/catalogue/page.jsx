@@ -30,7 +30,7 @@ export default async function CataloguePage() {
     <main>
 
       {/* Hero */}
-      <section className="bg-[#0f172a] py-16 px-6">
+      <section className="bg-[#102f79] py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-[11px] text-blue-500 uppercase tracking-widest font-medium mb-3">
             Catalogue
@@ -109,7 +109,7 @@ export default async function CataloguePage() {
                         download
                         className="flex items-center gap-1.5 text-[12px] text-white bg-[#1e3a5f] hover:bg-[#162d4a] px-3 py-2 rounded-lg transition-colors"
                       >
-                      
+
                         <IconDownload size={13} />
                         Download
                       </a>
@@ -121,27 +121,6 @@ export default async function CataloguePage() {
           )}
         </div>
       </section>
-
-      {/* CTA */}
-      <section className="py-14 px-6 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-[20px] font-medium text-slate-900 mb-2">
-              Need a specific datasheet?
-            </h3>
-            <p className="text-[13px] text-slate-400">
-              Contact us and we will send you the technical documentation you need.
-            </p>
-          </div>
-          <a
-            href="/contact"
-            className="bg-[#1e3a5f] hover:bg-[#162d4a] text-white text-[13px] font-medium px-6 py-3 rounded-lg transition-colors whitespace-nowrap"
-          >
-            Request datasheet
-          </a>
-        </div>
-      </section>
-
     </main>
   )
 }

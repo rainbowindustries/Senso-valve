@@ -47,7 +47,7 @@ export default function ProductClient({ product }) {
     <div ref={pageRef}>
 
       {/* Breadcrumb + Hero */}
-      <section className="bg-[#0f172a] py-10 px-6">
+      <section className="bg-[#102f79] py-10 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-[12px] text-slate-400 mb-4 flex-wrap">
             <Link href="/" className="hover:text-white transition-colors">
@@ -136,13 +136,13 @@ export default function ProductClient({ product }) {
 
               {/* Action buttons */}
               <div className="flex gap-3 flex-wrap">
-                <a  
-                  href={`mailto:info@hammervalve.com?subject=Inquiry about ${product.name}`}
+                {/* <Link
+                  href={`/contact?product=${encodeURIComponent(product.name)}&product_id=${product.id}`}
                   className="flex items-center gap-2 bg-[#1e3a5f] hover:bg-[#162d4a] text-white text-[13px] font-medium px-5 py-2.5 rounded-lg transition-colors"
                 >
                   <IconMail size={15} />
                   Email inquiry
-                </a>
+                </Link> */}
                 <a
                   href={`https://wa.me/919876543210?text=I am interested in ${product.name}`}
                   target="_blank"
@@ -228,7 +228,7 @@ export default function ProductClient({ product }) {
                   Get technical specifications and pricing from our team within 24 hours.
                 </p>
                 <Link
-                  href="/contact"
+                  href={`/contact?product=${encodeURIComponent(product.name)}&product_id=${product.id}`}
                   className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-[13px] font-medium px-5 py-2.5 rounded-lg transition-colors w-full"
                 >
                   Send enquiry

@@ -13,6 +13,7 @@ import {
   IconX,
   IconChevronRight,
   IconAward,
+  IconPhoto
 } from '@tabler/icons-react'
 
 const menuItems = [
@@ -40,6 +41,11 @@ const menuItems = [
     label: 'Certificates',
     href: '/admin/certificates',
     icon: IconAward,
+  },
+  {
+    label: 'Gallery',
+    href: '/admin/gallery',
+    icon: IconPhoto,
   },
 ]
 
@@ -167,7 +173,7 @@ export default function AdminLayout({ children }) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 overflow-x-hidden min-w-0">
           {children}
         </main>
 

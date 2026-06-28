@@ -1,9 +1,15 @@
+'use client'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import {
-  IconAward, IconLayoutGrid,
-  IconFileDownload, IconCircleCheck
+  IconLayoutGrid,
+  IconFileDownload,
+  IconCircleCheck,
+  IconShieldCheck,
 } from '@tabler/icons-react'
+import { useInView } from 'react-intersection-observer'
 
+// ─── Data ──────────────────────────────────────────
 const certifications = [
   'ISO 9001:2015',
   'API 6D',
@@ -13,120 +19,304 @@ const certifications = [
 ]
 
 const stats = [
-  { num: '500+', label: 'Products' },
-  { num: '25+', label: 'Years experience' },
-  { num: '40+', label: 'Countries exported' },
-  { num: '5,000+', label: 'Global clients' },
+  { num: '500+',   label: 'Products' },
+  { num: '25+',    label: 'Years of Excellence' },
+  { num: '40+',    label: 'Countries Exported' },
+  { num: '5000+',  label: 'Global Clients' },
 ]
 
-export default function HeroSection() {
+const slides = [
+  {
+    url: 'https://www.sensovalves.com/img/background_2.jpeg',
+    label: 'Precision Engineering',
+  },
+  {
+    url: 'https://www.sensovalves.com/img/background_6.jpeg',
+    label: 'Industrial Pipeline Systems',
+  },
+  {
+    url: 'https://www.sensovalves.com/img/background_3.jpg',
+    label: 'Advanced Manufacturing',
+  },
+  {
+    url: 'https://www.sensovalves.com/img/background_4.jpeg',
+    label: 'Advanced Manufacturing',
+  },
+  {
+    url: 'https://www.sensovalves.com/img/background_5.jpeg',
+    label: 'Advanced Manufacturing',
+  },
+]
+
+// ─── Counter hook ──────────────────────────────────
+function useCounter(target, duration = 1800, active = false) {
+  const [val, setVal] = useState(0)
+
+  useEffect(() => {
+    if (!active) return
+    const numTarget = parseInt(target.replace(/\D/g, ''), 10)
+    if (!numTarget) return
+    let start = null
+    const step = (ts) => {
+      if (!start) start = ts
+      const p = Math.min((ts - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - p, 3)
+      setVal(Math.floor(eased * numTarget))
+      if (p < 1) requestAnimationFrame(step)
+    }
+    requestAnimationFrame(step)
+  }, [target, duration, active])
+
+  return val
+}
+
+// ─── Stat card ─────────────────────────────────────
+function StatCard({ num, label, active }) {
+  const suffix = num.replace(/[\d,]/g, '')
+  const raw = useCounter(num, 1800, active)
+
   return (
-    <section>
+    <div className="flex-1 min-w-[110px] text-center px-6 py-5 border-r border-white/10 last:border-r-0">
+      <div className="text-[26px] font-semibold text-white leading-none mb-1 tracking-tight">
+        {raw}{suffix}
+      </div>
+      <div className="text-[11px] text-white/50 uppercase tracking-widest font-normal">
+        {label}
+      </div>
+    </div>
+  )
+}
 
-      {/* Hero */}
-      <div className="relative min-h-[520px] flex items-center justify-center overflow-hidden bg-[#0f1f35]">
+// ─── Fade up on scroll ─────────────────────────────
+function FadeUp({ children, delay = 0, className = '' }) {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 })
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(28px)',
+        transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms,
+                     transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 
-        {/* Grid Background */}
+// ─── Main ──────────────────────────────────────────
+export default function HeroSection() {
+  const [activeSlide, setActiveSlide] = useState(0)
+  const [prevSlide, setPrevSlide] = useState(null)
+  const [heroVisible, setHeroVisible] = useState(false)
+  const [statsActive, setStatsActive] = useState(false)
+  const statsRef = useRef(null)
+  const intervalRef = useRef(null)
+
+  const DISPLAY_TIME   = 4100  // ms each slide stays fully visible
+  const CROSSFADE_TIME = 1400  // ms for the crossfade transition
+  // Total = 5500ms per slide cycle
+
+  // Slideshow
+  useEffect(() => {
+    const startInterval = () => {
+      intervalRef.current = setInterval(() => {
+        setActiveSlide(current => {
+          const next = (current + 1) % slides.length
+          setPrevSlide(current)
+          setTimeout(() => setPrevSlide(null), CROSSFADE_TIME)
+          return next
+        })
+      }, DISPLAY_TIME + CROSSFADE_TIME)
+    }
+    startInterval()
+    return () => clearInterval(intervalRef.current)
+  }, [])
+
+  // Hero entrance
+  useEffect(() => {
+    const t = setTimeout(() => setHeroVisible(true), 150)
+    return () => clearTimeout(t)
+  }, [])
+
+  // Stats counter trigger
+  useEffect(() => {
+    const el = statsRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setStatsActive(true) },
+      { threshold: 0.4 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  const goTo = (i) => {
+    setActiveSlide(prev => {
+      setPrevSlide(prev)
+      setTimeout(() => setPrevSlide(null), CROSSFADE_TIME)
+      return i
+    })
+    clearInterval(intervalRef.current)
+    intervalRef.current = setInterval(() => {
+      setActiveSlide(current => {
+        const next = (current + 1) % slides.length
+        setPrevSlide(current)
+        setTimeout(() => setPrevSlide(null), CROSSFADE_TIME)
+        return next
+      })
+    }, DISPLAY_TIME + CROSSFADE_TIME)
+  }
+
+  return (
+    <section className="font-sans">
+
+      {/* ── HERO ───────────────────────────────────── */}
+      <div className="relative min-h-[100vh] flex flex-col overflow-hidden">
+
+        {/* Outgoing slide — fades out smoothly after full display */}
+        {prevSlide !== null && (
+          <div
+            key={`prev-${prevSlide}`}
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${slides[prevSlide].url})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
+              zIndex: 3,
+              animation: `heroLeave ${CROSSFADE_TIME}ms cubic-bezier(0.4,0,0.6,1) forwards`,
+            }}
+          />
+        )}
+
+        {/* Active slide — already fully visible underneath the outgoing fade */}
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${slide.url})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
+              opacity: i === activeSlide ? 1 : 0,
+              zIndex: i === activeSlide ? 2 : 0,
+              animation: i === activeSlide ? 'heroEnter 5.5s cubic-bezier(0.22,1,0.36,1) forwards' : 'none',
+            }}
+          />
+        ))}
+
+        {/* Overlay */}
         <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-            backgroundSize: '48px 48px',
-          }}
+          className="absolute inset-0 bg-gradient-to-r from-[#0f1928]/85 via-[#0f1928]/65 to-[#0f1928]/30"
+          style={{ zIndex: 3 }}
         />
 
-        {/* Blue Glow */}
+        {/* Hero content */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          className="relative flex-1 flex items-center px-8 md:px-16 lg:px-20 py-24 max-w-3xl"
           style={{
-            width: '600px',
-            height: '300px',
-            background: 'radial-gradient(ellipse, rgba(59,130,246,0.18) 0%, transparent 70%)',
+            zIndex: 4,
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? 'translateY(0)' : 'translateY(24px)',
+            transition: 'opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)',
           }}
-        />
+        >
+          <div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center max-w-3xl mx-auto px-6 py-20">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm">
+              <IconShieldCheck size={13} color="#93C5FD" strokeWidth={1.5} />
+              <span className="text-[11px] text-white/80 uppercase tracking-[1.8px] font-medium">
+                ISO 9001:2015 Certified Manufacturer
+              </span>
+            </div>
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/25 text-blue-300 text-[11px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-7">
-            <IconAward size={13} />
-            ISO 9001:2015 Certified manufacturer
-          </div>
+            {/* Heading */}
+            <h1 className="text-[clamp(36px,5vw,58px)] font-semibold text-white leading-[1.15] tracking-tight mb-5">
+              WELLCOME TO<br />
+              <span className="text-green-300">
+                VERTEX VALVE
+              </span>
+            </h1>
 
-          {/* Heading */}
-          <h1 className="text-4xl md:text-5xl font-medium text-white leading-[1.18] tracking-tight mb-5">
-            Precision Industrial Valves<br />
-            Trusted by{' '}
-            <em className="not-italic text-blue-400">Global</em>{' '}
-            Engineers
-          </h1>
+            {/* Subtext */}
+            <p className="text-[16px] font-light text-white/70 leading-relaxed max-w-[480px] mb-9">
+              Manufacturer & exporter of manual and automated valves for oil & gas,
+              pharma, power and water treatment industries across 40+ countries.
+            </p>
 
-          {/* Subtext */}
-          <p className="text-[15px] text-slate-400 leading-relaxed mb-8 max-w-xl mx-auto">
-            Manufacturer & exporter of manual and automated valves for oil & gas, pharma, power and water treatment industries across 40+ countries.
-          </p>
+            {/* CTA buttons */}
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 bg-[#1a2e44] hover:bg-[#142438] text-white text-[14px] font-medium px-7 py-3.5 rounded-lg border border-[#1a2e44] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#1a2e44]/40"
+              >
+                <IconLayoutGrid size={16} strokeWidth={1.5} />
+                Explore Products
+              </Link>
+              <Link
+                href="/catalogue"
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/18 text-white text-[14px] font-normal px-7 py-3.5 rounded-lg border border-white/28 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/45"
+              >
+                <IconFileDownload size={16} strokeWidth={1.5} />
+                Download Catalogue
+              </Link>
+            </div>
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <Link
-              href="/products"
-              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-[14px] font-medium px-7 py-3 rounded-lg transition-colors"
-            >
-              <IconLayoutGrid size={16} />
-              Explore products
-            </Link>
-            <Link
-              href="/catalogue"
-              className="flex items-center gap-2 bg-white/8 hover:bg-white/12 border border-white/15 text-slate-300 text-[14px] px-7 py-3 rounded-lg transition-colors backdrop-blur-sm"
-            >
-              <IconFileDownload size={16} />
-              Download catalogue
-            </Link>
           </div>
         </div>
 
-        {/* Stats Bar */}
-        <div className="absolute bottom-0 left-0 right-0 bg-white/4 backdrop-blur-sm border-t border-white/8">
+        {/* Stats bar — bottom of hero */}
+        <div
+          ref={statsRef}
+          className="relative bg-[#0f1928]/88 backdrop-blur-md border-t border-white/10"
+          style={{ zIndex: 4 }}
+        >
           <div className="max-w-7xl mx-auto flex flex-wrap justify-center">
             {stats.map((s, i) => (
-              <div
-                key={i}
-                className="px-8 py-4 text-center border-r border-white/8 last:border-r-0 flex-1 min-w-[120px]"
-              >
-                <div className="text-[22px] font-medium text-white leading-none">
-                  {s.num}
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1 tracking-wide">
-                  {s.label}
-                </div>
-              </div>
+              <StatCard key={i} {...s} active={statsActive} />
             ))}
           </div>
         </div>
+
       </div>
 
-      {/* Certification Strip */}
-      <div className="bg-slate-50 border-b border-slate-200 px-6 py-3">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-3">
-          <span className="text-[11px] text-slate-400 uppercase tracking-widest font-medium whitespace-nowrap">
+      {/* ── CERTIFICATION STRIP ─────────────────────── */}
+      <div className="bg-white border-b border-slate-100 py-3 px-8 md:px-16">
+        <div className="max-w-7xl mx-auto flex items-center flex-wrap gap-3">
+          <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest whitespace-nowrap">
             Certified by
           </span>
           <div className="w-px h-5 bg-slate-200 hidden sm:block" />
           <div className="flex flex-wrap gap-2">
-            {certifications.map((cert) => (
+            {certifications.map(cert => (
               <div
                 key={cert}
-                className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-md px-3 py-1.5 text-[12px] text-[#1e3a5f] font-medium"
+                className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:bg-blue-50 hover:border-blue-200 hover:text-[#1a2e44] rounded-md px-3 py-1.5 text-[12px] font-medium text-slate-600 transition-all cursor-default"
               >
-                <IconCircleCheck size={13} color="#3b82f6" />
+                <IconCircleCheck size={13} color="#4A7FA5" strokeWidth={1.5} />
                 {cert}
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Keyframes */}
+      <style jsx global>{`
+        @keyframes heroEnter {
+          0%   { opacity: 0; transform: scale(1.06); }
+          8%   { opacity: 1; transform: scale(1.04); }
+          85%  { opacity: 1; transform: scale(1.0);  }
+          100% { opacity: 1; transform: scale(1.0);  }
+        }
+        @keyframes heroLeave {
+          0%   { opacity: 1; }
+          100% { opacity: 0; }
+        }
+      `}</style>
 
     </section>
   )

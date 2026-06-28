@@ -8,6 +8,7 @@ import {
   IconX,
   IconPlus,
   IconTrash,
+  IconFileTypePdf,
 } from '@tabler/icons-react'
 
 export default function EditProductPage({ params }) {
@@ -184,6 +185,11 @@ export default function EditProductPage({ params }) {
       formData.append('category_id', form.category_id)
       formData.append('featured', form.featured)
       formData.append('specifications', JSON.stringify(specifications))
+
+      // If existing PDF was removed send empty string
+      if (!existingPdf && !pdf) {
+        formData.append('remove_pdf', 'true')
+      }
 
       newImages.forEach(img => {
         formData.append('images', img)
@@ -480,88 +486,110 @@ export default function EditProductPage({ params }) {
           </h2>
 
           {/* Show existing PDF */}
-          {existingPdf && !pdf && (
-            <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 mb-4">
-              <div className="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center">
-                <IconUpload size={15} className="text-red-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-[13px] text-slate-700 font-medium">
-                  Current PDF
-                </p>
-                <a
+          {existingPdf && (
+            <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center">
+                  <IconFileTypePdf size={15} className="text-red-400" />
+                </div>
+                <div>
+                  <p className="text-[13px] text-slate-700 font-medium">
+                    Current PDF
+                  </p>
+                  <a
                   href={existingPdf}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[11px] text-blue-500 hover:text-blue-600"
-                >
+                  >
                   View current datasheet
                 </a>
               </div>
             </div>
-          )}
+      {/* Remove existing PDF button */}
+          <button
+            type="button"
+            onClick={() => setExistingPdf(null)}
+            className="w-8 h-8 bg-red-50 hover:bg-red-100 border border-red-100 rounded-lg flex items-center justify-center transition-colors"
+          >
+            <IconX size={14} className="text-red-400" />
+          </button>
+        </div>
+  )}
 
-          <label className="block border-2 border-dashed border-slate-200 rounded-xl p-6 text-center cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors">
-            <IconUpload size={20} className="text-slate-300 mx-auto mb-2" />
-            {pdf ? (
+        {/* Upload new PDF */}
+        <label className="block border-2 border-dashed border-slate-200 rounded-xl p-6 text-center cursor-pointer hover:border-blue-300 hover:bg-blue-50/30 transition-colors">
+          <IconUpload size={20} className="text-slate-300 mx-auto mb-2" />
+          {pdf ? (
+            <div className="flex items-center justify-center gap-2">
               <p className="text-[13px] text-green-600 font-medium">
                 ✓ {pdf.name}
               </p>
-            ) : (
-              <>
-                <p className="text-[13px] text-slate-500 mb-1">
-                  {existingPdf
-                    ? 'Upload new PDF to replace existing'
-                    : 'Click to upload PDF datasheet'
-                  }
-                </p>
-                <p className="text-[11px] text-slate-400">
-                  PDF up to 10MB
-                </p>
-              </>
-            )}
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={(e) => setPdf(e.target.files[0])}
-              className="hidden"
-            />
-          </label>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-[13px] text-red-600">
-            {error}
-          </div>
-        )}
-
-        {/* Submit */}
-        <div className="flex items-center gap-3 pb-10">
-          <button
-            type="submit"
-            disabled={saving}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white text-[13px] font-medium px-6 py-3 rounded-lg transition-colors"
-          >
-            {saving ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Saving changes...
-              </>
-            ) : (
-              'Save changes'
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="text-[13px] text-slate-500 hover:text-slate-700 px-4 py-3"
-          >
-            Cancel
-          </button>
-        </div>
-
-      </form>
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); setPdf(null) }}
+                className="text-red-400 hover:text-red-600"
+              >
+                <IconX size={14} />
+              </button>
+            </div>
+          ) : (
+            <>
+              <p className="text-[13px] text-slate-500 mb-1">
+                {existingPdf
+                  ? 'Upload new PDF to replace existing'
+                  : 'Click to upload PDF datasheet'
+                }
+              </p>
+              <p className="text-[11px] text-slate-400">
+                PDF up to 50MB
+              </p>
+            </>
+          )}
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={(e) => setPdf(e.target.files[0])}
+            className="hidden"
+          />
+        </label>
     </div>
+
+        {/* Error */ }
+  {
+    error && (
+      <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-[13px] text-red-600">
+        {error}
+      </div>
+    )
+  }
+
+  {/* Submit */ }
+  <div className="flex items-center gap-3 pb-10">
+    <button
+      type="submit"
+      disabled={saving}
+      className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white text-[13px] font-medium px-6 py-3 rounded-lg transition-colors"
+    >
+      {saving ? (
+        <>
+          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          Saving changes...
+        </>
+      ) : (
+        'Save changes'
+      )}
+    </button>
+    <button
+      type="button"
+      onClick={() => router.back()}
+      className="text-[13px] text-slate-500 hover:text-slate-700 px-4 py-3"
+    >
+      Cancel
+    </button>
+  </div>
+
+      </form >
+    </div >
   )
 }

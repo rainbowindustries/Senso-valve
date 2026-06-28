@@ -110,16 +110,16 @@ const getProductById = asyncHandler(async (req, res) => {
 const createProduct = asyncHandler(async (req, res) => {
 
     const {
-    name: rawName,
-    'name ': altName,
-    slug,
-    description,
-    category_id,
-    specifications,
-    featured
-} = req.body
+        name: rawName,
+        'name ': altName,
+        slug,
+        description,
+        category_id,
+        specifications,
+        featured
+    } = req.body
 
-const name = (rawName || altName)?.trim()
+    const name = (rawName || altName)?.trim()
 
     // Validate required fields
     if (!name || !slug || !category_id) {
@@ -242,7 +242,23 @@ const updateProduct = asyncHandler(async (req, res) => {
     }
 
     // Upload new PDF if provided
+    // Handle PDF
     let pdfUrl = existing.pdf_url
+
+    // Remove PDF if requested
+    if (req.body.remove_pdf === 'true') {
+        if (existing.pdf_url) {
+            const publicId = existing.pdf_url
+                .split('/')
+                .slice(-4)
+                .join('/')
+                .replace(/\.[^/.]+$/, '')
+            await deleteFromCloudinary(publicId)
+        }
+        pdfUrl = null
+    }
+
+    // Upload new PDF if provided
     if (req.files?.pdf?.[0]) {
         const uploaded = await uploadOnCloudinary(
             req.files.pdf[0].path,

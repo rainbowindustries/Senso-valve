@@ -17,7 +17,7 @@ async function getCategories() {
 }
 
 export const metadata = {
-  title: 'Products | Hammer Valve Industries',
+  title: 'Products | Senso Valve Industries',
   description: 'Browse our complete range of industrial valves and automation products.',
 }
 
@@ -28,7 +28,7 @@ export default async function ProductsPage() {
     <main>
 
       {/* Hero */}
-      <section className="bg-[#0f172a] py-16 px-6">
+      <section className="bg-[#102f79] py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-[11px] text-blue-500 uppercase tracking-widest font-medium mb-3">
             Products
@@ -122,37 +122,6 @@ export default async function ProductsPage() {
           </section>
         ))
       )}
-
-      {/* CTA */}
-      <section className="py-14 px-6 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-[20px] font-medium text-slate-900 mb-2">
-              Can't find what you need?
-            </h3>
-            <p className="text-[13px] text-slate-400">
-              We manufacture custom valve solutions. Contact our engineering team.
-            </p>
-          </div>
-          <div className="flex gap-3">
-            <a
-              href="https://wa.me/919876543210"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white text-[13px] font-medium px-6 py-3 rounded-lg transition-colors"
-            >
-              WhatsApp us
-            </a>
-            <Link
-              href="/contact"
-              className="bg-[#1e3a5f] hover:bg-[#162d4a] text-white text-[13px] font-medium px-6 py-3 rounded-lg transition-colors"
-            >
-              Send enquiry
-            </Link>
-          </div>
-        </div>
-      </section>
-
     </main>
   )
 }

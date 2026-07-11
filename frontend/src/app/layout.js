@@ -1,8 +1,9 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Rainbo Industries',
+  title: 'Vertex Valve ',
   description: 'Industrial Valve Manufacturer',
+  icon: '/Vertex_Valve_logo.jpeg', // Replace with your logo URL
 }
 
 export default function RootLayout({ children }) {

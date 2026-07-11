@@ -134,7 +134,7 @@ export default function Navbar() {
             alt="Company Logo"
             width={180}
             height={60}
-            className="h-12 w-auto"
+            className="h-18 w-auto"
             priority
           />
         </Link>

@@ -27,12 +27,8 @@ const stats = [
 
 const slides = [
   {
-    url: 'https://www.sensovalves.com/img/background_2.jpeg',
+    url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuAQm7O1LTcNUEcCE4g7ktYCe36m7ld9DS77YqEfMKIw&s=10',
     label: 'Precision Engineering',
-  },
-  {
-    url: 'https://www.sensovalves.com/img/background_6.jpeg',
-    label: 'Industrial Pipeline Systems',
   },
   {
     url: 'https://www.sensovalves.com/img/background_3.jpg',
@@ -237,8 +233,9 @@ export default function HeroSection() {
             <h1 className="text-[clamp(36px,5vw,58px)] font-semibold text-white leading-[1.15] tracking-tight mb-5">
               WELLCOME TO<br />
               <span className="text-green-300">
-                VERTEX VALVE
+                VERTEX 
               </span>
+              <span className="text-[#e9883e]"> VALVE</span>
             </h1>
 
             {/* Subtext */}

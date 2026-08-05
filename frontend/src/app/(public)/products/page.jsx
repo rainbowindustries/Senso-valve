@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { IconArrowRight, IconFilter } from '@tabler/icons-react'
+import { IconArrowRight } from '@tabler/icons-react'
 
+// Fetch Categories Server-Side
 async function getCategories() {
   try {
     const res = await fetch(
@@ -16,105 +17,161 @@ async function getCategories() {
   }
 }
 
+// Page Metadata
 export const metadata = {
-  title: 'Products | Senso Valve Industries',
-  description: 'Browse our complete range of industrial valves and automation products.',
+  title: 'Products -',
+  description: 'Browse our complete catalog of industrial valves manufactured in India. Certified Ball Valves, Gate Valves, Globe Valves, Check Valves, Butterfly Valves, and automated flow control systems.',
+  keywords: [
+    'industrial valves catalogue',
+    'ball valve catalog',
+    'gate valve manufacturer catalog',
+    'butterfly valve specifications',
+    'check valve sizes',
+    'globe valve pressure ratings',
+    'industrial valve products',
+  ],
+  alternates: {
+    canonical: '/products',
+  },
 }
+
 
 export default async function ProductsPage() {
   const categories = await getCategories()
 
   return (
-    <main>
+    <main className="bg-white font-sans min-h-screen">
 
-      {/* Hero */}
-      <section className="bg-[#102f79] py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-[11px] text-blue-500 uppercase tracking-widest font-medium mb-3">
-            Products
-          </p>
-          <h1 className="text-[36px] font-medium text-white tracking-tight mb-4">
-            Our product range
+      {/* ── Injection of NATIVE FADE-IN CSS (No client-side JS overhead) ── */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-up {
+          opacity: 0;
+          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+      ` }} />
+
+      {/* Hero Section */}
+      <section className="bg-[#1E4356] py-20 px-6 md:px-10 relative overflow-hidden">
+        <div className="absolute right-0 bottom-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none translate-x-1/3 translate-y-1/3" />
+        <div className="absolute left-10 top-5 w-40 h-40 bg-[#EF8135]/[0.05] rounded-full blur-2xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10 animate-fade-up">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-6 h-0.5 bg-[#EF8135] rounded-full" />
+            <span className="text-[11px] font-bold text-white/80 uppercase tracking-[2.5px]">
+              Products
+            </span>
+          </div>
+          <h1 className="text-[36px] md:text-[42px] font-extrabold text-white tracking-tight leading-tight mb-4">
+            Our Product Range
           </h1>
-          <p className="text-[15px] text-slate-400 max-w-xl leading-relaxed">
-            Industrial valve products engineered for critical applications across oil & gas, pharma, water treatment and power sectors.
+          <p className="text-[15px] sm:text-[16px] text-white/80 max-w-xl leading-relaxed">
+            Industrial valve solutions engineered for critical applications across oil & gas, pharma, water treatment, and power sectors.
           </p>
         </div>
       </section>
 
-      {/* Products by category */}
+      {/* Products by Category */}
       {categories.length === 0 ? (
-        <section className="py-20 px-6 text-center">
+        <section className="py-20 px-6 text-center bg-[#FAFAF8] animate-fade-up delay-100">
           <p className="text-slate-400">No products found.</p>
         </section>
       ) : (
-        categories.map((cat) => (
-          <section key={cat.id} className="py-14 px-6 border-b border-slate-100 bg-white">
+        categories.map((cat, catIdx) => (
+          <section
+            key={cat.id}
+            className="py-16 px-6 border-b border-slate-200/60 bg-white last:border-b-0 animate-fade-up"
+            style={{ animationDelay: `${(catIdx + 1) * 150}ms` }}
+          >
             <div className="max-w-7xl mx-auto">
 
-              {/* Category header */}
-              <div className="flex items-end justify-between mb-8">
+              {/* Category Header */}
+              <div className="flex items-end justify-between mb-8 pb-3 border-b border-slate-100">
                 <div>
-                  <h2 className="text-[22px] font-medium text-slate-900 tracking-tight">
+                  <h2 className="text-[22px] md:text-[24px] font-bold text-slate-900 tracking-tight">
                     {cat.name}
                   </h2>
-                  <p className="text-[13px] text-slate-400 mt-1">
+                  <p className="text-[13px] text-slate-500 mt-1">
                     {cat.description}
                   </p>
                 </div>
               </div>
 
-              {/* Products grid */}
+              {/* Products Grid */}
               {cat.products && cat.products.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {cat.products.map((p) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  {cat.products.map((p, pIdx) => (
                     <Link
                       key={p.id}
                       href={`/products/${p.slug}`}
-                      className="group border border-slate-200 rounded-xl overflow-hidden hover:border-blue-400 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-200 bg-white"
+                      className="group relative border border-[#E5E2DC] rounded-2xl overflow-hidden bg-white p-0 flex flex-col justify-between transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_1px_4px_rgba(0,0,0,0.02)] hover:border-[#0A8F8A]/45 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-[#0A8F8A]/5 animate-fade-up"
+                      style={{ animationDelay: `${(pIdx % 4) * 80 + 100}ms` }}
                     >
-                      {/* Product image */}
-                      <div className="bg-slate-50 h-48 flex items-center justify-center border-b border-slate-100 relative overflow-hidden">
-                        {p.images && p.images.length > 0 ? (
-                          <Image
-                            src={p.images[0]}
-                            alt={p.name}
-                            width={200}
-                            height={200}
-                            className="object-contain h-40 w-auto group-hover:scale-105 transition-transform duration-300"
-                          />
-                        ) : (
-                          <div className="w-24 h-24 bg-slate-200 rounded-full flex items-center justify-center">
-                            <span className="text-slate-400 text-[11px]">No image</span>
-                          </div>
-                        )}
-                        <span className="absolute top-3 left-3 text-[10px] bg-[#1e3a5f] text-blue-300 px-2.5 py-1 rounded font-medium">
-                          {cat.name}
-                        </span>
+                      {/* Accent highlight bar on hover */}
+                      <div className="absolute top-0 left-0 w-full h-[3px] bg-transparent group-hover:bg-[#0A8F8A] transition-all duration-[600ms]" />
+
+                      <div>
+                        {/* Image Frame */}
+                        <div className="bg-[#FAFAF9] h-52 flex items-center justify-center border-b border-slate-100 relative overflow-hidden p-4">
+                          {p.images && p.images.length > 0 ? (
+                            <Image
+                              src={p.images[0]}
+                              alt={p.name}
+                              width={200}
+                              height={200}
+                              className="object-contain h-40 w-auto transform transition-all duration-500 group-hover:scale-[1.06] group-hover:rotate-1"
+                            />
+                          ) : (
+                            <div className="w-20 h-20 bg-slate-200/60 rounded-full flex items-center justify-center">
+                              <span className="text-slate-400 text-[11px] font-medium">No image</span>
+                            </div>
+                          )}
+                          <span className="absolute top-3 left-3 text-[10px] bg-[#1E4356] text-[#FFC299] px-2.5 py-1 rounded-md font-semibold tracking-wide shadow-sm">
+                            {cat.name}
+                          </span>
+                        </div>
+
+                        {/* Text info */}
+                        <div className="p-5">
+                          <h3 className="text-[14.5px] font-bold text-slate-800 leading-snug tracking-tight mb-4 transition-colors duration-300 group-hover:text-[#0A8F8A]">
+                            {p.name}
+                          </h3>
+                        </div>
                       </div>
 
-                      {/* Product info */}
-                      <div className="p-4">
-                        <h3 className="text-[14px] font-medium text-slate-900 mb-3">
-                          {p.name}
-                        </h3>
-                        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                          <span className="text-[12px] text-blue-500 flex items-center gap-1 group-hover:gap-2 transition-all">
-                            <IconArrowRight size={12} />
+                      {/* Card Footer specs indicator */}
+                      <div className="px-5 pb-5 mt-auto">
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                          <span className="text-[12.5px] text-[#0A8F8A] font-semibold flex items-center gap-1 transition-all duration-300 group-hover:gap-2 group-hover:text-[#EF8135]">
+                            <IconArrowRight size={13} strokeWidth={2.5} />
                             View specs
                           </span>
                           {p.featured && (
-                            <span className="text-[10px] text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded">
+                            <span className="text-[9.5px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-0.5 rounded-full shadow-sm animate-pulse">
                               Featured
                             </span>
                           )}
                         </div>
                       </div>
+
                     </Link>
                   ))}
                 </div>
               ) : (
-                <p className="text-slate-400 text-[13px]">
+                <p className="text-slate-400 text-[13px] italic">
                   No products in this category yet.
                 </p>
               )}

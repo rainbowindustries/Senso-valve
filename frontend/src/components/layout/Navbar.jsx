@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
-  IconSettings2,
   IconMenu2,
   IconX,
   IconChevronDown,
@@ -119,77 +118,82 @@ export default function Navbar() {
 
   return (
     <header
-      className={`bg-white sticky top-0 z-50 transition-all duration-300 ${scrolled
-          ? 'border-b border-slate-200 shadow-[0_4px_24px_rgba(15,23,42,0.06)]'
-          : 'border-b border-transparent'
+      style={{
+        textRendering: 'optimizeLegibility',
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
+      }}
+      className={`sticky top-0 z-50 transition-all duration-350 antialiased ${scrolled
+        ? 'bg-white/95 backdrop-blur-md border-b border-[#E5E2DC] shadow-[0_8px_30px_rgba(10,143,138,0.03)]'
+        : 'bg-white border-b border-transparent'
         }`}
     >
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-10 h-[70px] sm:h-[76px] flex items-center justify-between gap-3 sm:gap-6">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-10 h-[74px] sm:h-[80px] flex items-center justify-between gap-3 sm:gap-6">
 
         {/* Logo */}
-        {/* Logo */}
-        <Link href="/" className="flex items-center flex-shrink-0">
+        <Link href="/" className="flex items-center flex-shrink-0 transition-opacity duration-300 hover:opacity-95">
           <Image
-            src="/Vertex_Valve_logo.png"   // or your logo URL
-            alt="Company Logo"
-            width={180}
-            height={60}
-            className="h-18 w-auto"
+            src="/Logo (2).png"
+            alt="Vertex Valve - Industrial Valve Manufacturer Logo"
+            width={150}
+            height={65}
+            className="h-[75px] md:h-[80px] "
             priority
           />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-1">
+
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-2">
           {navLinks.map(link => {
             const active = isActive(link.href)
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative px-3.5 py-2 text-[13.5px] font-medium no-underline group"
+                className="relative px-3.5 py-2 text-[14.5px] md:text-[15px] font-semibold tracking-tight no-underline group"
               >
                 <span
-                  className={`relative z-10 transition-colors duration-200 ${active ? 'text-slate-900 font-semibold' : 'text-slate-500 group-hover:text-slate-900'
+                  className={`relative z-10 transition-colors duration-200 ${active ? 'text-[#0A8F8A] font-bold' : 'text-slate-700 group-hover:text-[#0A8F8A]'
                     }`}
                 >
                   {link.label}
                 </span>
                 <span
-                  className={`absolute left-3.5 right-3.5 bottom-1.5 h-[2px] rounded-full bg-[#1a2e44] origin-left transition-transform duration-200 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  className={`absolute left-3.5 right-3.5 bottom-1 h-[2.5px] rounded-full bg-[#0A8F8A] origin-left transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                 />
               </Link>
             )
           })}
 
-          {/* Certificates dropdown — desktop only */}
+          {/* Certificates dropdown */}
           <div className="relative" onMouseEnter={openCert} onMouseLeave={closeCert}>
-            <button className="flex items-center gap-1 px-3.5 py-2 text-[13.5px] font-medium text-slate-500 hover:text-slate-900 bg-transparent border-none cursor-pointer transition-colors duration-200">
+            <button className="flex items-center gap-1.5 px-3.5 py-2 text-[14.5px] md:text-[15px] font-semibold tracking-tight text-slate-700 hover:text-[#0A8F8A] bg-transparent border-none cursor-pointer transition-colors duration-200">
               Certificates
               <IconChevronDown
-                size={13}
-                strokeWidth={2}
-                className={`transition-transform duration-200 ${certOpen ? 'rotate-180' : ''}`}
+                size={14}
+                strokeWidth={2.5}
+                className={`transition-transform duration-300 ${certOpen ? 'rotate-180 text-[#0A8F8A]' : ''}`}
               />
             </button>
 
             <div
               onMouseEnter={openCert}
               onMouseLeave={closeCert}
-              className={`absolute top-[calc(100%+12px)] right-0 w-64 bg-white border border-slate-200 rounded-2xl shadow-[0_16px_48px_rgba(15,23,42,0.12)] z-[60] overflow-hidden transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] origin-top-right ${certOpen
-                  ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
-                  : 'opacity-0 -translate-y-2 scale-[0.97] pointer-events-none'
+              className={`absolute top-[calc(100%+12px)] right-0 w-64 bg-white border border-[#E5E2DC] rounded-2xl shadow-[0_20px_50px_rgba(10,143,138,0.06)] z-[60] overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-top-right ${certOpen
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                : 'opacity-0 -translate-y-2 scale-[0.97] pointer-events-none'
                 }`}
             >
-              <div className="px-4 py-3 border-b border-slate-100">
-                <span className="text-[10px] text-slate-400 uppercase tracking-[1.5px] font-bold">
+              <div className="px-4 py-3 bg-[#FAFAF8] border-b border-slate-100">
+                <span className="text-[10px] text-slate-400 uppercase tracking-[2px] font-bold block">
                   Download Certificates
                 </span>
               </div>
               <div className="py-1.5 max-h-72 overflow-y-auto">
                 {certificates.length === 0 ? (
-                  <p className="text-[13px] text-slate-400 px-4 py-3">No certificates uploaded yet</p>
+                  <p className="text-[13px] text-slate-400 px-4 py-3 italic">No certificates uploaded yet</p>
                 ) : (
                   certificates.map(cert => (
                     <a
@@ -197,12 +201,12 @@ export default function Navbar() {
                       href={cert.file_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 px-4 py-2.5 no-underline hover:bg-slate-50 transition-colors duration-150"
+                      className="flex items-center gap-3 px-4 py-3 no-underline text-slate-700 hover:bg-[#EBF5F4]/60 hover:text-[#0A8F8A] transition-all duration-200"
                     >
                       <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center flex-shrink-0">
-                        <IconFileTypePdf size={15} color="#ef4444" strokeWidth={1.5} />
+                        <IconFileTypePdf size={16} color="#ef4444" strokeWidth={1.5} />
                       </div>
-                      <span className="text-[13px] text-slate-700 font-medium leading-snug">{cert.name}</span>
+                      <span className="text-[13.5px] font-bold leading-snug">{cert.name}</span>
                     </a>
                   ))
                 )}
@@ -211,46 +215,46 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Right side — search + mobile toggle */}
-        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+        {/* Right Actions Block (Search & Mobile Navigation) */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
 
-          {/* Search */}
+          {/* Search Button / Input */}
           <div ref={searchBoxRef} className="relative">
             {!searchOpen ? (
               <button
                 onClick={() => setSearchOpen(true)}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center cursor-pointer text-slate-600 hover:bg-slate-100 transition-colors duration-150 bg-transparent border-none flex-shrink-0"
+                className="w-10 h-10 rounded-xl flex items-center justify-center cursor-pointer text-slate-600 hover:text-[#0A8F8A] hover:bg-slate-100 transition-all duration-200 bg-transparent border-none flex-shrink-0"
                 aria-label="Search products"
               >
-                <IconSearch size={18} strokeWidth={1.8} />
+                <IconSearch size={19} strokeWidth={2} />
               </button>
             ) : (
-              <div className="fixed sm:absolute left-0 sm:left-auto right-0 top-[70px] sm:top-0 sm:right-0 sm:relative flex items-center bg-slate-50 border border-slate-200 sm:rounded-xl px-3 h-12 sm:h-10 w-screen sm:w-[280px] z-50 border-x-0 sm:border-x">
-                <IconSearch size={16} className="text-slate-400 flex-shrink-0" strokeWidth={1.8} />
+              <div className="fixed sm:absolute left-0 sm:left-auto right-0 top-[74px] sm:top-0 sm:right-0 sm:relative flex items-center bg-[#FAFAF8] border border-[#E5E2DC] sm:rounded-xl px-3 h-12 sm:h-10 w-screen sm:w-[280px] z-50 border-x-0 sm:border-x">
+                <IconSearch size={17} className="text-[#0A8F8A] flex-shrink-0" strokeWidth={2.2} />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search products..."
-                  className="flex-1 min-w-0 bg-transparent border-none outline-none text-[13.5px] text-slate-900 placeholder-slate-400 px-2"
+                  className="flex-1 min-w-0 bg-transparent border-none outline-none text-[13.5px] text-slate-800 placeholder-slate-400 px-2 font-semibold"
                 />
                 <button
                   onClick={() => setSearchOpen(false)}
                   className="text-slate-400 hover:text-slate-600 flex-shrink-0"
                 >
-                  <IconX size={16} strokeWidth={1.8} />
+                  <IconX size={17} strokeWidth={2} />
                 </button>
               </div>
             )}
 
-            {/* Results dropdown */}
+            {/* Search Results Dropdown */}
             {searchOpen && query.trim() && (
-              <div className="fixed sm:absolute left-0 sm:left-auto right-0 top-[122px] sm:top-[calc(100%+10px)] sm:right-0 w-screen sm:w-[320px] bg-white border-y sm:border border-slate-200 sm:rounded-2xl shadow-[0_16px_48px_rgba(15,23,42,0.14)] z-[60] overflow-hidden max-h-[360px] overflow-y-auto">
+              <div className="fixed sm:absolute left-0 sm:left-auto right-0 top-[122px] sm:top-[calc(100%+10px)] sm:right-0 w-screen sm:w-[320px] bg-white border-y sm:border border-[#E5E2DC] sm:rounded-2xl shadow-[0_16px_48px_rgba(10,143,138,0.08)] z-[60] overflow-hidden max-h-[360px] overflow-y-auto">
                 {results.length === 0 ? (
                   <div className="px-4 py-6 text-center">
-                    <p className="text-[13px] text-slate-400">
-                      No products found for "<span className="text-slate-600 font-medium">{query}</span>"
+                    <p className="text-[13.5px] text-slate-400">
+                      No products found for "<span className="text-slate-600 font-bold">{query}</span>"
                     </p>
                   </div>
                 ) : (
@@ -259,22 +263,22 @@ export default function Navbar() {
                       <button
                         key={p.id}
                         onClick={() => goToProduct(p.slug)}
-                        className="flex items-center gap-3 w-full px-4 py-2.5 hover:bg-slate-50 transition-colors duration-150 text-left"
+                        className="flex items-center gap-3 w-full px-4 py-2.5 hover:bg-[#EBF5F4]/60 text-slate-700 hover:text-[#0A8F8A] transition-all duration-200 text-left"
                       >
                         <div className="w-9 h-9 rounded-lg bg-slate-100 overflow-hidden flex items-center justify-center flex-shrink-0">
                           {p.images && p.images.length > 0 ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={p.images[0]} alt={p.name} className="w-full h-full object-contain p-1" />
                           ) : (
-                            <IconPackage size={15} className="text-slate-300" />
+                            <IconPackage size={15} className="text-slate-350" />
                           )}
                         </div>
                         <div className="min-w-0">
-                          <div className="text-[13px] font-medium text-slate-900 truncate">
+                          <div className="text-[13.5px] font-bold truncate">
                             {p.name}
                           </div>
                           {p.categories?.name && (
-                            <div className="text-[11px] text-slate-400 truncate">
+                            <div className="text-[11.5px] text-slate-400 font-medium truncate">
                               {p.categories.name}
                             </div>
                           )}
@@ -287,17 +291,18 @@ export default function Navbar() {
             )}
           </div>
 
+          {/* Mobile Toggle Button */}
           <button
             onClick={() => setMenuOpen(o => !o)}
-            className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] flex items-center justify-center cursor-pointer text-slate-600 hover:bg-slate-100 transition-colors duration-150 bg-transparent border-none flex-shrink-0"
+            className="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center cursor-pointer text-slate-600 hover:text-[#0A8F8A] hover:bg-slate-100 transition-colors duration-150 bg-transparent border-none flex-shrink-0"
             aria-label="Toggle menu"
           >
-            {menuOpen ? <IconX size={20} strokeWidth={1.6} /> : <IconMenu2 size={20} strokeWidth={1.6} />}
+            {menuOpen ? <IconX size={22} strokeWidth={2} /> : <IconMenu2 size={22} strokeWidth={2} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Drawer Menu */}
       <div
         className={`lg:hidden bg-white border-t border-slate-100 overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${menuOpen ? 'max-h-[600px] py-4 px-4 sm:px-5' : 'max-h-0 px-4 sm:px-5'
           }`}
@@ -310,9 +315,9 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl text-[14.5px] no-underline transition-colors duration-150 ${active
-                    ? 'font-semibold text-slate-900 bg-slate-50'
-                    : 'font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                className={`px-4 py-3 rounded-xl text-[14.5px] sm:text-[15px] no-underline transition-all duration-200 ${active
+                  ? 'font-bold text-[#0A8F8A] bg-[#EBF5F4]'
+                  : 'font-semibold text-slate-600 hover:bg-[#FAFAF8] hover:text-slate-900'
                   }`}
               >
                 {link.label}
@@ -320,17 +325,17 @@ export default function Navbar() {
             )
           })}
 
-          {/* Certificates — collapsible accordion on mobile */}
+          {/* Collapsible Mobile Certificates Accordion */}
           <div className="mt-1 border-t border-slate-100 pt-1">
             <button
               onClick={() => setMobileCertOpen(o => !o)}
-              className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-[14.5px] font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors duration-150"
+              className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-[14.5px] sm:text-[15px] font-semibold text-slate-600 hover:bg-[#FAFAF8] hover:text-slate-900 transition-all duration-150"
             >
               Certificates
               <IconChevronDown
                 size={16}
-                strokeWidth={2}
-                className={`transition-transform duration-200 ${mobileCertOpen ? 'rotate-180' : ''}`}
+                strokeWidth={2.5}
+                className={`transition-transform duration-200 ${mobileCertOpen ? 'rotate-180 text-[#0A8F8A]' : ''}`}
               />
             </button>
 
@@ -339,7 +344,7 @@ export default function Navbar() {
                 }`}
             >
               {certificates.length === 0 ? (
-                <p className="text-[13px] text-slate-400 px-4 py-2">No certificates uploaded yet</p>
+                <p className="text-[13px] text-slate-400 px-4 py-2 italic">No certificates uploaded yet</p>
               ) : (
                 certificates.map(cert => (
                   <a
@@ -347,10 +352,10 @@ export default function Navbar() {
                     href={cert.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-4 py-2.5 pl-7 rounded-xl no-underline hover:bg-slate-50 transition-colors duration-150"
+                    className="flex items-center gap-2.5 px-4 py-3 pl-7 rounded-xl no-underline text-slate-700 hover:bg-[#EBF5F4]/40 hover:text-[#0A8F8A] transition-all duration-200"
                   >
                     <IconFileTypePdf size={14} color="#ef4444" strokeWidth={1.5} />
-                    <span className="text-[14px] text-slate-700 font-medium">{cert.name}</span>
+                    <span className="text-[13.5px] font-bold">{cert.name}</span>
                   </a>
                 ))
               )}

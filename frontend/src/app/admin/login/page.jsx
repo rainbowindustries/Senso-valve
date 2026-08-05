@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
           </div>
           <div>
             <div className="text-[16px] font-medium text-white">
-              Hammer Valve
+              Vertex Valve
             </div>
             <div className="text-[11px] text-slate-500 uppercase tracking-wide">
               Admin panel

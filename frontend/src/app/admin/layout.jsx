@@ -89,7 +89,7 @@ export default function AdminLayout({ children }) {
           </div>
           <div>
             <div className="text-[14px] font-medium text-white">
-              Hammer Valve
+              Vertex Valve
             </div>
             <div className="text-[10px] text-slate-500 uppercase tracking-wide">
               Admin panel

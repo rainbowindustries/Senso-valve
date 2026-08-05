@@ -1,3 +1,4 @@
+
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -28,7 +29,6 @@ const support = [
   { label: 'Contact Us', href: '/contact' },
   { label: 'Certificates', href: '/about#certifications' },
   { label: 'Get a Quote', href: '/contact' },
-  { label: 'Privacy Policy', href: '/privacy' },
 ]
 
 const social = [
@@ -58,12 +58,12 @@ function FadeUp({ children, delay = 0, className = '' }) {
 function AccordionSection({ title, children }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="border-b border-slate-100 last:border-b-0">
+    <div className="border-b border-slate-200/80 last:border-b-0">
       <button
         onClick={() => setOpen(o => !o)}
         className="flex items-center justify-between w-full py-4 text-left bg-transparent border-none cursor-pointer"
       >
-        <span className="text-[12px] font-bold text-slate-900 uppercase tracking-[1.5px]">
+        <span className="text-[12px] font-bold text-slate-800 uppercase tracking-[1.5px]">
           {title}
         </span>
         <IconChevronDown
@@ -85,45 +85,10 @@ function AccordionSection({ title, children }) {
 
 export default function Footer() {
   return (
-    <footer className="bg-white">
+    <footer className="bg-[#FAFAF9] text-slate-600 border-t border-slate-200/50">
 
-      {/* CTA banner */}
-      <div className="bg-[#1a2e44]">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-10 py-8 sm:py-10">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-            <FadeUp delay={0}>
-              <div>
-                <h3 className="text-[17px] sm:text-[20px] lg:text-[22px] font-bold text-white mb-1 leading-snug">
-                  Need the right valve for your application?
-                </h3>
-                <p className="text-[13px] text-white/50">
-                  Our engineering team replies within 24 hours.
-                </p>
-              </div>
-            </FadeUp>
-            <FadeUp delay={100} className="flex-shrink-0 w-full sm:w-auto">
-              <div className="flex gap-3 w-full sm:w-auto">
-                <a
-                  href="https://wa.me/919909954311"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white text-[13px] font-semibold px-4 sm:px-5 py-3 rounded-xl no-underline transition-colors duration-200"
-                >
-                  <IconBrandWhatsapp size={16} strokeWidth={1.6} />
-                  WhatsApp
-                </a>
-                <Link
-                  href="/contact"
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white hover:bg-slate-100 text-[#1a2e44] text-[13px] font-semibold px-4 sm:px-5 py-3 rounded-xl no-underline transition-colors duration-200"
-                >
-                  Get a Quote
-                  <IconArrowUpRight size={14} strokeWidth={2} />
-                </Link>
-              </div>
-            </FadeUp>
-          </div>
-        </div>
-      </div>
+      {/* Decorative top border line (Logo Teal Accent) */}
+      <div className="h-[3px] w-full bg-[#0A8F8A]" />
 
       {/* ── DESKTOP layout (lg+) ─────────────────────── */}
       <div className="hidden lg:block max-w-[1280px] mx-auto px-10 py-16">
@@ -133,8 +98,8 @@ export default function Footer() {
           <FadeUp delay={0}>
             <Link href="/" className="flex items-center mb-5 no-underline">
               <Image
-                src="/Vertex_Valve_logo.png"
-                alt="Company Logo"
+                src="/Logo (2).png"
+                alt="Vertex Valve - Industrial Valve Manufacturer Logo"
                 width={160}
                 height={52}
                 className="h-25 w-auto"
@@ -154,9 +119,9 @@ export default function Footer() {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-[#1a2e44] flex items-center justify-center transition-colors duration-200 group"
+                    className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:bg-[#0A8F8A]/10 hover:border-[#0A8F8A]/35 flex items-center justify-center transition-colors duration-200 group"
                   >
-                    <Icon size={17} className="text-slate-500 group-hover:text-white transition-colors duration-200" strokeWidth={1.6} />
+                    <Icon size={17} className="text-slate-500 group-hover:text-[#0A8F8A] transition-colors duration-200" strokeWidth={1.6} />
                   </a>
                 )
               })}
@@ -165,10 +130,10 @@ export default function Footer() {
 
           {/* Pages */}
           <FadeUp delay={80}>
-            <p className="text-[11px] font-bold text-slate-900 uppercase tracking-[1.5px] mb-5">Pages</p>
+            <p className="text-[11px] font-bold text-[#0A8F8A] uppercase tracking-[1.5px] mb-5">Pages</p>
             <div className="flex flex-col gap-3">
               {pages.map(p => (
-                <Link key={p.href} href={p.href} className="text-[13.5px] text-slate-500 hover:text-[#1a2e44] no-underline transition-colors duration-150 w-fit">
+                <Link key={p.href} href={p.href} className="text-[13.5px] text-slate-500 hover:text-[#0A8F8A] no-underline transition-colors duration-150 w-fit">
                   {p.label}
                 </Link>
               ))}
@@ -177,10 +142,10 @@ export default function Footer() {
 
           {/* Support */}
           <FadeUp delay={140}>
-            <p className="text-[11px] font-bold text-slate-900 uppercase tracking-[1.5px] mb-5">Support</p>
+            <p className="text-[11px] font-bold text-[#0A8F8A] uppercase tracking-[1.5px] mb-5">Support</p>
             <div className="flex flex-col gap-3">
               {support.map(p => (
-                <Link key={p.label} href={p.href} className="text-[13.5px] text-slate-500 hover:text-[#1a2e44] no-underline transition-colors duration-150 w-fit">
+                <Link key={p.label} href={p.href} className="text-[13.5px] text-slate-500 hover:text-[#0A8F8A] no-underline transition-colors duration-150 w-fit">
                   {p.label}
                 </Link>
               ))}
@@ -189,31 +154,31 @@ export default function Footer() {
 
           {/* Contact */}
           <FadeUp delay={200}>
-            <p className="text-[11px] font-bold text-slate-900 uppercase tracking-[1.5px] mb-5">Get in Touch</p>
+            <p className="text-[11px] font-bold text-[#0A8F8A] uppercase tracking-[1.5px] mb-5">Get in Touch</p>
             <div className="flex flex-col gap-4">
               <a href="tel:+919909954311" className="flex items-start gap-3 no-underline group">
-                <div className="w-9 h-9 rounded-lg bg-slate-50 group-hover:bg-[#1a2e44] flex items-center justify-center flex-shrink-0 transition-colors duration-200">
-                  <IconPhone size={15} className="text-slate-500 group-hover:text-white transition-colors duration-200" strokeWidth={1.6} />
+                <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 group-hover:bg-[#0A8F8A]/10 group-hover:border-[#0A8F8A]/35 flex items-center justify-center flex-shrink-0 transition-colors duration-200">
+                  <IconPhone size={15} className="text-slate-500 group-hover:text-[#0A8F8A] transition-colors duration-200" strokeWidth={1.6} />
                 </div>
-                <div className="text-[13.5px] font-medium text-slate-700 group-hover:text-[#1a2e44] transition-colors pt-1.5">+91 99099 54311</div>
+                <div className="text-[13.5px] font-medium text-slate-700 group-hover:text-[#0A8F8A] transition-colors pt-1.5">+91 93278 41813</div>
               </a>
-              <a href="mailto:info@hammervalve.com" className="flex items-start gap-3 no-underline group">
-                <div className="w-9 h-9 rounded-lg bg-slate-50 group-hover:bg-[#1a2e44] flex items-center justify-center flex-shrink-0 transition-colors duration-200">
-                  <IconMail size={15} className="text-slate-500 group-hover:text-white transition-colors duration-200" strokeWidth={1.6} />
+              <a href="mailto:info@vertexvalve.com" className="flex items-start gap-3 no-underline group">
+                <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 group-hover:bg-[#0A8F8A]/10 group-hover:border-[#0A8F8A]/35 flex items-center justify-center flex-shrink-0 transition-colors duration-200">
+                  <IconMail size={15} className="text-slate-500 group-hover:text-[#0A8F8A] transition-colors duration-200" strokeWidth={1.6} />
                 </div>
-                <div className="text-[13.5px] font-medium text-slate-700 group-hover:text-[#1a2e44] transition-colors pt-1.5 break-all">info@hammervalve.com</div>
+                <div className="text-[13.5px] font-medium text-slate-700 group-hover:text-[#0A8F8A] transition-colors pt-1.5 break-all">infovertexvalve78@gmail.com <br/>Salesvertexvalve78@gmail.com</div>
               </a>
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
                   <IconMapPin size={15} className="text-slate-500" strokeWidth={1.6} />
                 </div>
-                <div className="text-[13.5px] text-slate-700 leading-relaxed pt-1.5">Plot No. 12, GIDC Estate,<br />Rajkot — 360002, Gujarat</div>
+                <div className="text-[13.5px] text-slate-700 leading-relaxed pt-1.5">Rani industries Estate, Division-1, Plot No. 52,<br />B/h. Parin Furniture, Gondal Road,<br />N.H. 8-B, Vill.Vavdi,<br/>Dist.:Rajkot, Pincode:360004</div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
                   <IconClock size={15} className="text-slate-500" strokeWidth={1.6} />
                 </div>
-                <div className="text-[13.5px] text-slate-700 leading-relaxed pt-1.5">Mon – Sat, 9:00 AM – 6:00 PM</div>
+                <div className="text-[13.5px] text-slate-700 leading-relaxed pt-1.5">8:00 AM – 8:00 PM</div>
               </div>
             </div>
           </FadeUp>
@@ -225,11 +190,11 @@ export default function Footer() {
       <div className="lg:hidden max-w-[1280px] mx-auto px-4 sm:px-8 pt-8 pb-4">
 
         {/* Brand section — always visible */}
-        <div className="flex flex-col items-start gap-4 mb-6 pb-6 border-b border-slate-100">
+        <div className="flex flex-col items-start gap-4 mb-6 pb-6 border-b border-slate-200/60">
           <Link href="/" className="flex items-center no-underline">
             <Image
-              src="/Vertex_Valve_logo.png"
-              alt="Company Logo"
+              src="/Logo (2).png"
+              alt="Vertex Valve - Industrial Valve Manufacturer Logo"
               width={140}
               height={46}
               className="h-20 w-auto"
@@ -249,9 +214,9 @@ export default function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-slate-50 hover:bg-[#1a2e44] flex items-center justify-center transition-colors duration-200 group"
+                  className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:bg-[#0A8F8A]/10 hover:border-[#0A8F8A]/35 flex items-center justify-center transition-colors duration-200 group"
                 >
-                  <Icon size={17} className="text-slate-500 group-hover:text-white transition-colors duration-200" strokeWidth={1.6} />
+                  <Icon size={17} className="text-slate-500 group-hover:text-[#0A8F8A] transition-colors duration-200" strokeWidth={1.6} />
                 </a>
               )
             })}
@@ -259,41 +224,41 @@ export default function Footer() {
         </div>
 
         {/* Contact info — always visible on mobile too */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2 pb-6 border-b border-slate-100">
-          <a href="tel:+919909954311" className="flex items-center gap-3 no-underline bg-slate-50 rounded-xl px-4 py-3 hover:bg-slate-100 transition-colors">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
-              <IconPhone size={15} className="text-[#1a2e44]" strokeWidth={1.6} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2 pb-6 border-b border-slate-200/60">
+          <a href="tel:+919327841813" className="flex items-center gap-3 no-underline bg-white border border-slate-200/60 rounded-xl px-4 py-3 hover:bg-slate-100/60 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
+              <IconPhone size={15} className="text-[#0A8F8A]" strokeWidth={1.6} />
             </div>
             <div>
               <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Call us</div>
-              <div className="text-[13px] font-semibold text-slate-800">+91 99099 54311</div>
+              <div className="text-[13px] font-semibold text-slate-800">+91 93278 41813</div>
             </div>
           </a>
-          <a href="mailto:info@hammervalve.com" className="flex items-center gap-3 no-underline bg-slate-50 rounded-xl px-4 py-3 hover:bg-slate-100 transition-colors">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
-              <IconMail size={15} className="text-[#1a2e44]" strokeWidth={1.6} />
+          <a href="mailto:info@vertexvalve.com" className="flex items-center gap-3 no-underline bg-white border border-slate-200/60 rounded-xl px-4 py-3 hover:bg-slate-100/60 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
+              <IconMail size={15} className="text-[#0A8F8A]" strokeWidth={1.6} />
             </div>
             <div className="min-w-0">
               <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Email us</div>
-              <div className="text-[13px] font-semibold text-slate-800 truncate">info@hammervalve.com</div>
+              <div className="text-[13px] font-semibold text-slate-850 truncate">infovertexvalve78@gmail.com <br/>Salesvertexvalve78@gmail.com</div>
             </div>
           </a>
-          <div className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
-              <IconMapPin size={15} className="text-[#1a2e44]" strokeWidth={1.6} />
+          <div className="flex items-center gap-3 bg-white border border-slate-200/60 rounded-xl px-4 py-3">
+            <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
+              <IconMapPin size={15} className="text-[#0A8F8A]" strokeWidth={1.6} />
             </div>
             <div>
               <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Address</div>
-              <div className="text-[13px] font-semibold text-slate-800">Rajkot, Gujarat, India</div>
+              <div className="text-[13px] font-semibold text-slate-800">Rani industries Estate, Division-1, Plot No. 52, B/h. Parin Furniture, Gondal Road,<br />N.H. 8-B, Vill.Vavdi,<br/>Dist.:Rajkot, Pincode:360004</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
-              <IconClock size={15} className="text-[#1a2e44]" strokeWidth={1.6} />
+          <div className="flex items-center gap-3 bg-white border border-slate-200/60 rounded-xl px-4 py-3">
+            <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
+              <IconClock size={15} className="text-[#0A8F8A]" strokeWidth={1.6} />
             </div>
             <div>
               <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Hours</div>
-              <div className="text-[13px] font-semibold text-slate-800">Mon–Sat, 9AM–6PM</div>
+              <div className="text-[13px] font-semibold text-slate-800"> 8AM – 8PM</div>
             </div>
           </div>
         </div>
@@ -302,7 +267,7 @@ export default function Footer() {
         <AccordionSection title="Pages">
           <div className="flex flex-col gap-2.5">
             {pages.map(p => (
-              <Link key={p.href} href={p.href} className="text-[14px] text-slate-500 hover:text-[#1a2e44] no-underline transition-colors pl-1">
+              <Link key={p.href} href={p.href} className="text-[14px] text-slate-500 hover:text-[#0A8F8A] no-underline transition-colors pl-1">
                 {p.label}
               </Link>
             ))}
@@ -312,7 +277,7 @@ export default function Footer() {
         <AccordionSection title="Support">
           <div className="flex flex-col gap-2.5">
             {support.map(p => (
-              <Link key={p.label} href={p.href} className="text-[14px] text-slate-500 hover:text-[#1a2e44] no-underline transition-colors pl-1">
+              <Link key={p.label} href={p.href} className="text-[14px] text-slate-500 hover:text-[#0A8F8A] no-underline transition-colors pl-1">
                 {p.label}
               </Link>
             ))}
@@ -322,16 +287,17 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-slate-100 mt-4 sm:mt-0">
+      <div className="border-t border-slate-200/50 mt-4 sm:mt-0">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-8 lg:px-10 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span className="text-[12px] sm:text-[12.5px] text-slate-400 text-center sm:text-left">
-            © {new Date().getFullYear()} Hammer Valve Industries. All rights reserved.
+            © {new Date().getFullYear()} Rainbow Industries Pvt Ltd. All rights reserved.
           </span>
           <span className="text-[12px] sm:text-[12.5px] text-slate-400">
-            Rajkot, Gujarat, India 🇮🇳
+            Rajkot, Gujarat, India 
           </span>
         </div>
       </div>
+
 
     </footer>
   )

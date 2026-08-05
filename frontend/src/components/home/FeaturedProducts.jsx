@@ -148,57 +148,20 @@ export default function FeaturedProducts({ products = [] }) {
 
         {/* Header */}
         <FadeUp delay={0}>
-          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-6 h-0.5 rounded-full" style={{ background: '#1a2e44' }} />
-                <span className="text-[11px] font-semibold uppercase tracking-[2px]" style={{ color: '#1a2e44' }}>
-                  Product Range
-                </span>
-              </div>
-              <h2 className="text-[clamp(26px,4vw,36px)] font-bold text-slate-900 tracking-tight leading-tight mb-2">
-                Our Valve Categories
-              </h2>
-              <p className="text-[14px] text-slate-500 max-w-md leading-relaxed">
-                Comprehensive range of manual and automated valves manufactured to international standards.
-              </p>
+          <div className="flex flex-col items-center text-center mb-10">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-6 h-0.5 rounded-full" style={{ background: '#1a2e44' }} />
+              <span className="text-[11px] font-semibold uppercase tracking-[2px]" style={{ color: '#1a2e44' }}>
+                Product Range
+              </span>
+              <div className="w-6 h-0.5 rounded-full" style={{ background: '#1a2e44' }} />
             </div>
-
-            {/* Nav arrows + View all */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => scroll(-1)}
-                disabled={!canLeft}
-                className={`w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${
-                  canLeft
-                    ? 'bg-white border-slate-200 text-slate-600 hover:border-[#1a2e44] hover:text-[#1a2e44]'
-                    : 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed'
-                }`}
-              >
-                <IconChevronLeft size={16} strokeWidth={1.5} />
-              </button>
-              <button
-                onClick={() => scroll(1)}
-                disabled={!canRight}
-                className={`w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${
-                  canRight
-                    ? 'bg-white border-slate-200 text-slate-600 hover:border-[#1a2e44] hover:text-[#1a2e44]'
-                    : 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed'
-                }`}
-              >
-                <IconChevronRight size={16} strokeWidth={1.5} />
-              </button>
-              <Link
-                href="/products"
-                className="flex items-center gap-2 text-[13px] font-semibold px-4 py-2 rounded-lg border transition-all ml-1"
-                style={{ color: '#fff', background: '#1a2e44', borderColor: '#1a2e44' }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#253d57' }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#1a2e44' }}
-              >
-                View all
-                <IconArrowRight size={13} strokeWidth={2} />
-              </Link>
-            </div>
+            <h2 className="text-[clamp(26px,4vw,36px)] font-bold text-slate-900 tracking-tight leading-tight mb-2">
+              Our Valve Categories
+            </h2>
+            <p className="text-[14px] text-slate-500 max-w-md leading-relaxed mx-auto">
+              Comprehensive range of manual and automated valves manufactured to international standards.
+            </p>
           </div>
         </FadeUp>
 
@@ -223,6 +186,42 @@ export default function FeaturedProducts({ products = [] }) {
             ))}
           </div>
         </div>
+
+        {/* Nav arrows + View all centered below the carousel */}
+        <FadeUp delay={100}>
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <button
+              onClick={() => scroll(-1)}
+              disabled={!canLeft}
+              className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all ${canLeft
+                  ? 'bg-white border-slate-200 text-slate-600 hover:border-[#1a2e44] hover:text-[#1a2e44]'
+                  : 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed'
+                }`}
+            >
+              <IconChevronLeft size={18} strokeWidth={1.5} />
+            </button>
+            <button
+              onClick={() => scroll(1)}
+              disabled={!canRight}
+              className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all ${canRight
+                  ? 'bg-white border-slate-200 text-slate-600 hover:border-[#1a2e44] hover:text-[#1a2e44]'
+                  : 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed'
+                }`}
+            >
+              <IconChevronRight size={18} strokeWidth={1.5} />
+            </button>
+            <Link
+              href="/products"
+              className="flex items-center gap-2 text-[13px] font-semibold px-5 py-2.5 rounded-lg border transition-all ml-2"
+              style={{ color: '#fff', background: '#1a2e44', borderColor: '#1a2e44' }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#253d57' }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#1a2e44' }}
+            >
+              View all
+              <IconArrowRight size={14} strokeWidth={2} />
+            </Link>
+          </div>
+        </FadeUp>
 
       </div>
 

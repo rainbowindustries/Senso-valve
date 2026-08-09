@@ -19,32 +19,32 @@ import {
 const menuItems = [
   {
     label: 'Dashboard',
-    href: '/admin/dashboard',
+    href: '/backoffice-admin/dashboard',
     icon: IconLayoutDashboard,
   },
   {
     label: 'Products',
-    href: '/admin/products',
+    href: '/backoffice-admin/products',
     icon: IconPackage,
   },
   {
     label: 'Inquiries',
-    href: '/admin/inquiries',
+    href: '/backoffice-admin/inquiries',
     icon: IconMail,
   },
   {
     label: 'Catalogues',
-    href: '/admin/catalogues',
+    href: '/backoffice-admin/catalogues',
     icon: IconFileTypePdf,
   },
   {
     label: 'Certificates',
-    href: '/admin/certificates',
+    href: '/backoffice-admin/certificates',
     icon: IconAward,
   },
   {
     label: 'Gallery',
-    href: '/admin/gallery',
+    href: '/backoffice-admin/gallery',
     icon: IconPhoto,
   },
 ]
@@ -58,18 +58,18 @@ export default function AdminLayout({ children }) {
   useEffect(() => {
     // Check if admin is logged in
     const token = localStorage.getItem('adminToken')
-    if (!token && pathname !== '/admin/login') {
-      router.push('/admin/login')
+    if (!token && pathname !== '/backoffice-admin/login') {
+      router.push('/backoffice-admin/login')
     }
   }, [pathname])
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken')
-    router.push('/admin/login')
+    router.push('/backoffice-admin/login')
   }
 
   // Don't show sidebar on login page
-  if (pathname === '/admin/login') {
+  if (pathname === '/backoffice-admin/login') {
     return <>{children}</>
   }
 

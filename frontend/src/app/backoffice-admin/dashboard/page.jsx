@@ -69,28 +69,28 @@ export default function DashboardPage() {
       value: stats.products,
       icon: IconPackage,
       color: 'blue',
-      href: '/admin/products',
+      href: '/backoffice-admin/products',
     },
     {
       label: 'Total inquiries',
       value: stats.inquiries,
       icon: IconMail,
       color: 'green',
-      href: '/admin/inquiries',
+      href: '/backoffice-admin/inquiries',
     },
     {
       label: 'Unread inquiries',
       value: stats.unreadInquiries,
       icon: IconMailOpened,
       color: 'red',
-      href: '/admin/inquiries',
+      href: '/backoffice-admin/inquiries',
     },
     {
       label: 'Catalogues',
       value: stats.catalogues,
       icon: IconFileTypePdf,
       color: 'purple',
-      href: '/admin/catalogues',
+      href: '/backoffice-admin/catalogues',
     },
   ]
 
@@ -159,17 +159,17 @@ export default function DashboardPage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
-            href="/admin/products/create"
+            href="/backoffice-admin/products/create"
             className="flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white px-5 py-3.5 rounded-xl transition-colors"
           >
             <IconPackage size={18} />
             <div>
-              <div className="text-[13px] font-medium">Add new product</div>
-              <div className="text-[11px] text-blue-200">Create product listing</div>
+               <div className="text-[13px] font-medium">Add new product</div>
+               <div className="text-[11px] text-blue-200">Create product listing</div>
             </div>
           </Link>
           <Link
-            href="/admin/inquiries"
+            href="/backoffice-admin/inquiries"
             className="flex items-center gap-3 bg-white border border-slate-200 hover:border-blue-300 text-slate-700 px-5 py-3.5 rounded-xl transition-colors"
           >
             <IconMail size={18} className="text-blue-500" />
@@ -181,7 +181,7 @@ export default function DashboardPage() {
             </div>
           </Link>
           <Link
-            href="/admin/catalogues"
+            href="/backoffice-admin/catalogues"
             className="flex items-center gap-3 bg-white border border-slate-200 hover:border-blue-300 text-slate-700 px-5 py-3.5 rounded-xl transition-colors"
           >
             <IconFileTypePdf size={18} className="text-red-400" />
@@ -200,7 +200,7 @@ export default function DashboardPage() {
             Recent inquiries
           </h2>
           <Link
-            href="/admin/inquiries"
+            href="/backoffice-admin/inquiries"
             className="text-[12px] text-blue-500 hover:text-blue-600 flex items-center gap-1"
           >
             View all <IconArrowRight size={12} />

@@ -89,7 +89,7 @@ export default function AdminProductsPage() {
           </p>
         </div>
         <Link
-          href="/admin/products/create"
+          href="/backoffice-admin/products/create"
           className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-[13px] font-medium px-4 py-2.5 rounded-lg transition-colors"
         >
           <IconPlus size={16} />
@@ -124,7 +124,7 @@ export default function AdminProductsPage() {
               Add your first product to get started
             </p>
             <Link
-              href="/admin/products/create"
+              href="/backoffice-admin/products/create"
               className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-[13px] font-medium px-4 py-2 rounded-lg transition-colors"
             >
               <IconPlus size={15} />
@@ -212,7 +212,7 @@ export default function AdminProductsPage() {
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-2">
                       <Link
-                        href={`/admin/products/edit/${product.id}`}
+                        href={`/backoffice-admin/products/edit/${product.id}`}
                         className="w-8 h-8 bg-blue-50 hover:bg-blue-100 border border-blue-100 rounded-lg flex items-center justify-center transition-colors"
                       >
                         <IconEdit size={14} className="text-blue-500" />

@@ -1,4 +1,17 @@
+import { Sofia_Sans, Bricolage_Grotesque } from 'next/font/google'
 import './globals.css'
+
+const sofiaSans = Sofia_Sans({
+  subsets: ['latin'],
+  variable: '--font-sofia-sans',
+  display: 'swap',
+})
+
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage-grotesque',
+  display: 'swap',
+})
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vertexvalve.com'
 
@@ -44,11 +57,10 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/VertexValveLogo.png', type: 'image/png' },
+      { url: '/favicon.png', type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/VertexValveLogo.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
   },
   openGraph: {
     title: 'Vertex Valve | Premier Industrial Valve Manufacturer & Global Exporter',
@@ -166,7 +178,7 @@ export default function RootLayout({ children }) {
   }
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${sofiaSans.variable} ${bricolageGrotesque.variable}`}>
       <head>
         <script
           type="application/ld+json"

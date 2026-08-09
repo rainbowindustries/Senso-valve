@@ -139,7 +139,7 @@ export default function CreateProductPage() {
       const data = await res.json()
 
       if (data.success) {
-        router.push('/admin/products')
+        router.push('/backoffice-admin/products')
       } else {
         setError(data.message || 'Failed to create product')
       }

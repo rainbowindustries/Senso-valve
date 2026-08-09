@@ -211,7 +211,7 @@ export default function EditProductPage({ params }) {
       const data = await res.json()
 
       if (data.success) {
-        router.push('/admin/products')
+        router.push('/backoffice-admin/products')
       } else {
         setError(data.message || 'Failed to update product')
       }

@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
       if (data.success) {
         // Save token to localStorage
         localStorage.setItem('adminToken', data.data.token)
-        router.push('/admin/dashboard')
+        router.push('/backoffice-admin/dashboard')
       } else {
         setError(data.message || 'Invalid credentials')
       }

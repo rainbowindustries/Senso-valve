@@ -17,6 +17,8 @@ async function getCategories() {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 // Page Metadata
 export const metadata = {
   title: 'Products -',

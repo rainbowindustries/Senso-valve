@@ -27,6 +27,8 @@ export default function AdminGalleryPage() {
   const [editValue, setEditValue] = useState('')
   const [renaming, setRenaming] = useState(false)
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchImages()
   }, [])
@@ -34,7 +36,7 @@ export default function AdminGalleryPage() {
   const fetchImages = async () => {
     const token = localStorage.getItem('adminToken')
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`, {
+      const res = await fetch(`${apiUrl}/gallery`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await res.json()
@@ -76,7 +78,7 @@ export default function AdminGalleryPage() {
       formData.append('name', name.trim())
       formData.append('image', file)
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`, {
+      const res = await fetch(`${apiUrl}/gallery`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData,
@@ -105,7 +107,7 @@ export default function AdminGalleryPage() {
     const token = localStorage.getItem('adminToken')
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${id}`, {
+      const res = await fetch(`${apiUrl}/gallery/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })
@@ -136,7 +138,7 @@ export default function AdminGalleryPage() {
     const token = localStorage.getItem('adminToken')
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${id}`, {
+      const res = await fetch(`${apiUrl}/gallery/${id}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,

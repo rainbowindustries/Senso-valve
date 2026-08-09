@@ -26,6 +26,8 @@ export default function AdminCataloguesPage() {
   })
   const [pdf, setPdf] = useState(null)
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchCatalogues()
     fetchProducts()
@@ -35,7 +37,7 @@ export default function AdminCataloguesPage() {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/catalogues`,
+        `${apiUrl}/catalogues`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -53,7 +55,7 @@ export default function AdminCataloguesPage() {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        `${apiUrl}/products`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -88,7 +90,7 @@ export default function AdminCataloguesPage() {
       formData.append('pdf', pdf)
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/catalogues`,
+        `${apiUrl}/catalogues`,
         {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
@@ -120,7 +122,7 @@ export default function AdminCataloguesPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/catalogues/${id}`,
+        `${apiUrl}/catalogues/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }

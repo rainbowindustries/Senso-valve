@@ -47,14 +47,16 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/certificates`)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+    fetch(`${apiUrl}/certificates`)
       .then(r => r.json())
       .then(d => setCertificates(d.data || []))
       .catch(() => { })
   }, [])
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+    fetch(`${apiUrl}/products`)
       .then(r => r.json())
       .then(d => setAllProducts(d.data || []))
       .catch(() => { })
@@ -73,7 +75,7 @@ export default function Navbar() {
     }
     const q = query.trim().toLowerCase()
     const filtered = allProducts.filter(p =>
-      p.name.toLowerCase().includes(q)
+      p?.name && p.name.toLowerCase().includes(q)
     ).slice(0, 8)
     setResults(filtered)
   }, [query, allProducts])
@@ -114,6 +116,14 @@ export default function Navbar() {
   const goToProduct = (slug) => {
     setSearchOpen(false)
     router.push(`/products/${slug}`)
+  }
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    if (query.trim()) {
+      setSearchOpen(false)
+      router.push(`/products?search=${encodeURIComponent(query.trim())}`)
+    }
   }
 
   return (
@@ -231,15 +241,18 @@ export default function Navbar() {
             ) : (
               <div className="fixed sm:absolute left-0 sm:left-auto right-0 top-[74px] sm:top-0 sm:right-0 sm:relative flex items-center bg-[#FAFAF8] border border-[#E5E2DC] sm:rounded-xl px-3 h-12 sm:h-10 w-screen sm:w-[280px] z-50 border-x-0 sm:border-x">
                 <IconSearch size={17} className="text-[#0A8F8A] flex-shrink-0" strokeWidth={2.2} />
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search products..."
-                  className="flex-1 min-w-0 bg-transparent border-none outline-none text-[13.5px] text-slate-800 placeholder-slate-400 px-2 font-semibold"
-                />
+                <form onSubmit={handleSearchSubmit} className="flex-1 flex items-center min-w-0">
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search products..."
+                    className="w-full bg-transparent border-none outline-none text-[13.5px] text-slate-800 placeholder-slate-400 px-2 font-semibold"
+                  />
+                </form>
                 <button
+                  type="button"
                   onClick={() => setSearchOpen(false)}
                   className="text-slate-400 hover:text-slate-600 flex-shrink-0"
                 >

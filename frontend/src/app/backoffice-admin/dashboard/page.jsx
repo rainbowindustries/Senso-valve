@@ -32,12 +32,13 @@ export default function DashboardPage() {
     }
 
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
       const [productsRes, inquiriesRes, cataloguesRes, unreadRes] =
         await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, { headers }),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiries`, { headers }),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/catalogues`, { headers }),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiries/unread-count`, { headers }),
+          fetch(`${apiUrl}/products`, { headers }),
+          fetch(`${apiUrl}/inquiries`, { headers }),
+          fetch(`${apiUrl}/catalogues`, { headers }),
+          fetch(`${apiUrl}/inquiries/unread-count`, { headers }),
         ])
 
       const [products, inquiries, catalogues, unread] = await Promise.all([

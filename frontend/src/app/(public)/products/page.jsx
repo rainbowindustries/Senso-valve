@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { IconArrowRight } from '@tabler/icons-react'
+import { IconArrowRight, IconSearch, IconX } from '@tabler/icons-react'
 
 // Fetch Categories Server-Side
 async function getCategories() {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+      `${apiUrl}/categories`,
       { cache: 'no-store' }
     )
     const data = await res.json()
@@ -21,7 +22,7 @@ export const dynamic = 'force-dynamic'
 
 // Page Metadata
 export const metadata = {
-  title: 'Products -',
+  title: 'Products - Vertex Valve',
   description: 'Browse our complete catalog of industrial valves manufactured in India. Certified Ball Valves, Gate Valves, Globe Valves, Check Valves, Butterfly Valves, and automated flow control systems.',
   keywords: [
     'industrial valves catalogue',
@@ -37,14 +38,27 @@ export const metadata = {
   },
 }
 
-
-export default async function ProductsPage() {
+export default async function ProductsPage({ searchParams }) {
   const categories = await getCategories()
+  const params = await searchParams
+  const searchQuery = (params?.search || '').trim().toLowerCase()
+
+  // Filter products by search query if present
+  const filteredCategories = categories.map(cat => {
+    if (!searchQuery) return cat
+    const matchingProducts = (cat.products || []).filter(p =>
+      p.name?.toLowerCase().includes(searchQuery) ||
+      p.description?.toLowerCase().includes(searchQuery)
+    )
+    return { ...cat, products: matchingProducts }
+  }).filter(cat => !searchQuery || cat.products.length > 0)
+
+  const hasAnyProducts = filteredCategories.some(cat => cat.products && cat.products.length > 0)
 
   return (
     <main className="bg-white font-sans min-h-screen">
 
-      {/* ── Injection of NATIVE FADE-IN CSS (No client-side JS overhead) ── */}
+      {/* ── Injection of NATIVE FADE-IN CSS ── */}
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes fadeInUp {
@@ -66,7 +80,7 @@ export default async function ProductsPage() {
       ` }} />
 
       {/* Hero Section */}
-      <section className="bg-[#1E4356] py-20 px-6 md:px-10 relative overflow-hidden">
+      <section className="bg-[#1E4356] py-16 sm:py-20 px-6 md:px-10 relative overflow-hidden">
         <div className="absolute right-0 bottom-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none translate-x-1/3 translate-y-1/3" />
         <div className="absolute left-10 top-5 w-40 h-40 bg-[#EF8135]/[0.05] rounded-full blur-2xl pointer-events-none" />
 
@@ -77,22 +91,75 @@ export default async function ProductsPage() {
               Products
             </span>
           </div>
-          <h1 className="text-[36px] md:text-[42px] font-extrabold text-white tracking-tight leading-tight mb-4">
+          <h1 className="text-[32px] sm:text-[36px] md:text-[42px] font-extrabold text-white tracking-tight leading-tight mb-4">
             Our Product Range
           </h1>
-          <p className="text-[15px] sm:text-[16px] text-white/80 max-w-xl leading-relaxed">
+          <p className="text-[15px] sm:text-[16px] text-white/80 max-w-xl leading-relaxed mb-8">
             Industrial valve solutions engineered for critical applications across oil & gas, pharma, water treatment, and power sectors.
           </p>
+
+          {/* Product Search Form */}
+          <form action="/products" method="GET" className="max-w-xl flex items-center bg-white rounded-2xl p-1.5 shadow-xl border border-white/20">
+            <div className="pl-3.5 pr-2 text-[#0A8F8A]">
+              <IconSearch size={20} strokeWidth={2.2} />
+            </div>
+            <input
+              type="text"
+              name="search"
+              defaultValue={params?.search || ''}
+              placeholder="Search by valve type, name, or specification..."
+              className="flex-1 bg-transparent py-2 px-2 text-[14px] text-slate-800 placeholder-slate-400 outline-none font-medium"
+            />
+            {params?.search && (
+              <Link
+                href="/products"
+                className="p-2 text-slate-400 hover:text-slate-600 rounded-lg no-underline flex items-center"
+                title="Clear Search"
+              >
+                <IconX size={18} />
+              </Link>
+            )}
+            <button
+              type="submit"
+              className="bg-[#0A8F8A] hover:bg-[#087773] text-white px-5 py-2.5 rounded-xl font-bold text-[13.5px] transition-colors duration-200 shadow-sm"
+            >
+              Search
+            </button>
+          </form>
+
+          {searchQuery && (
+            <div className="mt-4 flex items-center gap-2 text-white/90 text-[13.5px]">
+              <span>Showing search results for:</span>
+              <span className="font-bold bg-white/10 px-3 py-1 rounded-lg border border-white/15">
+                "{params?.search}"
+              </span>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Products by Category */}
-      {categories.length === 0 ? (
+      {!hasAnyProducts ? (
         <section className="py-20 px-6 text-center bg-[#FAFAF8] animate-fade-up delay-100">
-          <p className="text-slate-400">No products found.</p>
+          <div className="max-w-md mx-auto">
+            <h3 className="text-[18px] font-bold text-slate-800 mb-2">
+              {searchQuery ? `No products matching "${params?.search}"` : 'No products found'}
+            </h3>
+            <p className="text-slate-500 text-[14px] mb-6">
+              Try searching with another keyword or explore all our valve categories.
+            </p>
+            {searchQuery && (
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 bg-[#0A8F8A] text-white px-5 py-2.5 rounded-xl font-bold text-[13.5px] no-underline shadow-sm hover:bg-[#087773] transition-colors"
+              >
+                View All Products
+              </Link>
+            )}
+          </div>
         </section>
       ) : (
-        categories.map((cat, catIdx) => (
+        filteredCategories.map((cat, catIdx) => (
           <section
             key={cat.id}
             className="py-16 px-6 border-b border-slate-200/60 bg-white last:border-b-0 animate-fade-up"

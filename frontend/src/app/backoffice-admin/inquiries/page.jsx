@@ -24,6 +24,8 @@ export default function AdminInquiriesPage() {
   const [bulkDeleting, setBulkDeleting] = useState(false)
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false)
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchInquiries()
   }, [filter])
@@ -31,7 +33,7 @@ export default function AdminInquiriesPage() {
   const fetchInquiries = async () => {
     const token = localStorage.getItem('adminToken')
     try {
-      let url = `${process.env.NEXT_PUBLIC_API_URL}/inquiries`
+      let url = `${apiUrl}/inquiries`
       if (filter === 'unread') url += '?is_read=false'
       if (filter === 'read') url += '?is_read=true'
 
@@ -52,7 +54,7 @@ export default function AdminInquiriesPage() {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/inquiries/${id}/read`,
+        `${apiUrl}/inquiries/${id}/read`,
         {
           method: 'PATCH',
           headers: { 'Authorization': `Bearer ${token}` }
@@ -78,7 +80,7 @@ export default function AdminInquiriesPage() {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/inquiries/${id}`,
+        `${apiUrl}/inquiries/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
@@ -110,7 +112,7 @@ export default function AdminInquiriesPage() {
     try {
       await Promise.all(
         checked.map(id =>
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiries/${id}`, {
+          fetch(`${apiUrl}/inquiries/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
           })

@@ -21,6 +21,8 @@ export default function AdminCertificatesPage() {
   const [form, setForm] = useState({ name: '' })
   const [pdf, setPdf] = useState(null)
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchCertificates()
   }, [])
@@ -29,7 +31,7 @@ export default function AdminCertificatesPage() {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/certificates`,
+        `${apiUrl}/certificates`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -62,7 +64,7 @@ export default function AdminCertificatesPage() {
       formData.append('pdf', pdf)
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/certificates`,
+        `${apiUrl}/certificates`,
         {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
@@ -94,7 +96,7 @@ export default function AdminCertificatesPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/certificates/${id}`,
+        `${apiUrl}/certificates/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }

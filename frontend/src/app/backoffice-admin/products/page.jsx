@@ -18,6 +18,8 @@ export default function AdminProductsPage() {
   const [search, setSearch] = useState('')
   const [deleting, setDeleting] = useState(null)
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchProducts()
   }, [])
@@ -26,7 +28,7 @@ export default function AdminProductsPage() {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        `${apiUrl}/products`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -48,7 +50,7 @@ export default function AdminProductsPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
+        `${apiUrl}/products/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }

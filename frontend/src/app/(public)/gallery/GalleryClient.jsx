@@ -35,7 +35,8 @@ export default function GalleryClient() {
   const [lightbox, setLightbox] = useState(null)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+    fetch(`${apiUrl}/gallery`)
       .then(r => r.json())
       .then(d => setImages(d.data || []))
       .catch(err => console.error('Failed to fetch gallery:', err))

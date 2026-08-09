@@ -4,9 +4,32 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/backoffice-admin/login',
+        permanent: true,
+      },
+      {
+        source: '/login',
+        destination: '/backoffice-admin/login',
+        permanent: true,
+      },
+      {
+        source: '/admin-panel',
+        destination: '/backoffice-admin/login',
+        permanent: true,
+      },
+    ]
   },
 }
 

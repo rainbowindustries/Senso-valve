@@ -7,8 +7,9 @@ import {
 // Fetch Catalogues Server-Side
 async function getCatalogues() {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/catalogues`,
+      `${apiUrl}/catalogues`,
       { cache: 'no-store' }
     )
     const data = await res.json()

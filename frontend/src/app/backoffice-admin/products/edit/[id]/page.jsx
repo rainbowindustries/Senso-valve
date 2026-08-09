@@ -34,6 +34,8 @@ export default function EditProductPage({ params }) {
     featured: false,
   })
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchProduct()
     fetchCategories()
@@ -43,7 +45,7 @@ export default function EditProductPage({ params }) {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/id/${id}`,
+        `${apiUrl}/products/id/${id}`,
         {
           headers: { 'Authorization': `Bearer ${token}` }
         }
@@ -91,7 +93,7 @@ export default function EditProductPage({ params }) {
   const fetchCategories = async () => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories`
+        `${apiUrl}/categories`
       )
       const data = await res.json()
       setCategories(data.data || [])
@@ -136,7 +138,7 @@ export default function EditProductPage({ params }) {
     const token = localStorage.getItem('adminToken')
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}/image`,
+        `${apiUrl}/products/${id}/image`,
         {
           method: 'DELETE',
           headers: {
@@ -200,7 +202,7 @@ export default function EditProductPage({ params }) {
       }
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
+        `${apiUrl}/products/${id}`,
         {
           method: 'PUT',
           headers: { 'Authorization': `Bearer ${token}` },

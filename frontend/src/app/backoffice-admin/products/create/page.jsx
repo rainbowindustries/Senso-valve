@@ -27,13 +27,15 @@ export default function CreateProductPage() {
     featured: false,
   })
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+
   useEffect(() => {
     fetchCategories()
   }, [])
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
+      const res = await fetch(`${apiUrl}/categories`)
       const data = await res.json()
       setCategories(data.data || [])
     } catch (error) {
@@ -128,7 +130,7 @@ export default function CreateProductPage() {
       }
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        `${apiUrl}/products`,
         {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },

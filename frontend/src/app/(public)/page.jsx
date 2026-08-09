@@ -27,8 +27,9 @@ export const metadata = {
 // Fetch featured products from backend
 async function getFeaturedProducts() {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products?featured=true`,
+      `${apiUrl}/products?featured=true`,
       {
         cache: 'no-store'
       }
@@ -49,7 +50,7 @@ export default async function Home() {
       <HeroSection />
       <FeaturedProducts products={products} />
       <IndustriesServed />
-      {/* <Certifications /> */}
+      <Certifications />
     </main>
   )
 }

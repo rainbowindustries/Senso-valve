@@ -91,50 +91,12 @@ export default async function ProductsPage({ searchParams }) {
               Products
             </span>
           </div>
-          <h1 className="text-[32px] sm:text-[36px] md:text-[42px] font-extrabold text-white tracking-tight leading-tight mb-4">
+          <h1 className="text-[36px] md:text-[42px] font-extrabold text-white tracking-tight leading-tight mb-4">
             Our Product Range
           </h1>
-          <p className="text-[15px] sm:text-[16px] text-white/80 max-w-xl leading-relaxed mb-8">
+          <p className="text-[15px] sm:text-[16px] text-white/80 max-w-xl leading-relaxed">
             Industrial valve solutions engineered for critical applications across oil & gas, pharma, water treatment, and power sectors.
           </p>
-
-          {/* Product Search Form */}
-          <form action="/products" method="GET" className="max-w-xl flex items-center bg-white rounded-2xl p-1.5 shadow-xl border border-white/20">
-            <div className="pl-3.5 pr-2 text-[#0A8F8A]">
-              <IconSearch size={20} strokeWidth={2.2} />
-            </div>
-            <input
-              type="text"
-              name="search"
-              defaultValue={params?.search || ''}
-              placeholder="Search by valve type, name, or specification..."
-              className="flex-1 bg-transparent py-2 px-2 text-[14px] text-slate-800 placeholder-slate-400 outline-none font-medium"
-            />
-            {params?.search && (
-              <Link
-                href="/products"
-                className="p-2 text-slate-400 hover:text-slate-600 rounded-lg no-underline flex items-center"
-                title="Clear Search"
-              >
-                <IconX size={18} />
-              </Link>
-            )}
-            <button
-              type="submit"
-              className="bg-[#0A8F8A] hover:bg-[#087773] text-white px-5 py-2.5 rounded-xl font-bold text-[13.5px] transition-colors duration-200 shadow-sm"
-            >
-              Search
-            </button>
-          </form>
-
-          {searchQuery && (
-            <div className="mt-4 flex items-center gap-2 text-white/90 text-[13.5px]">
-              <span>Showing search results for:</span>
-              <span className="font-bold bg-white/10 px-3 py-1 rounded-lg border border-white/15">
-                "{params?.search}"
-              </span>
-            </div>
-          )}
         </div>
       </section>
 

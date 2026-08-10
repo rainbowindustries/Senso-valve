@@ -14,8 +14,19 @@ import galleryRoutes from './src/routes/gallery.routes.js'
 const app = express()
 
 // ─── Middlewares ───────────────────────────────────
+const allowedOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
+    : ['http://localhost:3000']
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps, curl, or SSR) or if origin is allowed
+        if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(null, true)
+        }
+    },
     credentials: true
 }))
 

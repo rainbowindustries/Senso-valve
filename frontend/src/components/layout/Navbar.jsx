@@ -11,6 +11,7 @@ import {
   IconPackage,
 } from '@tabler/icons-react'
 import Image from 'next/image'
+import { API_URL } from '@/lib/api'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -47,19 +48,17 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
-    fetch(`${apiUrl}/certificates`)
+    fetch(`${API_URL}/certificates`)
       .then(r => r.json())
       .then(d => setCertificates(d.data || []))
-      .catch(() => { })
+      .catch(err => console.error('Failed to fetch navbar certificates:', err))
   }, [])
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
-    fetch(`${apiUrl}/products`)
+    fetch(`${API_URL}/products`)
       .then(r => r.json())
       .then(d => setAllProducts(d.data || []))
-      .catch(() => { })
+      .catch(err => console.error('Failed to fetch navbar products for search:', err))
   }, [])
 
   useEffect(() => {

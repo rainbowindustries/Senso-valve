@@ -1,5 +1,20 @@
 import GalleryClient from './GalleryClient'
 
+export const dynamic = 'force-dynamic'
+
+// Fetch Gallery Images Server-Side
+async function getGalleryImages() {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+    const res = await fetch(`${apiUrl}/gallery`, { cache: 'no-store' })
+    const data = await res.json()
+    return data.data || []
+  } catch (error) {
+    console.error('Failed to fetch gallery images:', error)
+    return []
+  }
+}
+
 export const metadata = {
   title: 'Gallery -',
   description: 'View photos of our industrial valve manufacturing facility in Rajkot, CNC machinery, quality testing lab, and manufactured Ball, Gate, Globe, Check, and Butterfly Valves.',
@@ -14,7 +29,8 @@ export const metadata = {
   },
 }
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await getGalleryImages()
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vertexvalve.com'
 
   const breadcrumbSchema = {
@@ -42,7 +58,8 @@ export default function GalleryPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <GalleryClient />
+      <GalleryClient initialImages={images} />
     </>
   )
 }
+

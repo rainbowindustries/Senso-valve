@@ -29,16 +29,20 @@ function FadeUp({ children, delay = 0, className = '' }) {
   )
 }
 
-export default function GalleryClient() {
-  const [images, setImages] = useState([])
-  const [loading, setLoading] = useState(true)
+export default function GalleryClient({ initialImages = [] }) {
+  const [images, setImages] = useState(initialImages)
+  const [loading, setLoading] = useState(initialImages.length === 0)
   const [lightbox, setLightbox] = useState(null)
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
     fetch(`${apiUrl}/gallery`)
       .then(r => r.json())
-      .then(d => setImages(d.data || []))
+      .then(d => {
+        if (d.data && d.data.length > 0) {
+          setImages(d.data)
+        }
+      })
       .catch(err => console.error('Failed to fetch gallery:', err))
       .finally(() => setLoading(false))
   }, [])

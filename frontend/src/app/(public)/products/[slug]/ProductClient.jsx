@@ -50,7 +50,7 @@ export default function ProductClient({ product }) {
       <section className="bg-[#1E4356] py-12 px-6 relative overflow-hidden">
         {/* Subtle decorative elements */}
         <div className="absolute right-0 bottom-0 w-64 h-64 bg-white/[0.02] rounded-full blur-2xl pointer-events-none translate-x-1/4 translate-y-1/4" />
-        
+
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex items-center gap-2 text-[12px] text-white/50 mb-4 flex-wrap">
             <Link href="/" className="hover:text-white transition-colors duration-200">
@@ -106,7 +106,7 @@ export default function ProductClient({ product }) {
                 {activeImage && (
                   <button
                     onClick={() => setLightbox(true)}
-                    className="absolute bottom-4 right-4 w-9 h-9 bg-white/95 hover:bg-white border border-[#E5E2DC] rounded-lg flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300"
+                    className="absolute bottom-4 right-4 w-9 h-9 bg-white/95 hover:bg-white border border-[#E5E2DC] rounded-lg flex items-center justify-center shadow-md transition-all duration-300"
                   >
                     <IconMaximize size={15} className="text-slate-600" />
                   </button>
@@ -120,11 +120,10 @@ export default function ProductClient({ product }) {
                     <button
                       key={i}
                       onClick={() => setActiveImage(img)}
-                      className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 flex-shrink-0 ${
-                        activeImage === img
-                          ? 'border-[#0A8F8A] shadow-md shadow-[#0A8F8A]/10'
-                          : 'border-[#E5E2DC] hover:border-[#0A8F8A]/40'
-                      }`}
+                      className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 flex-shrink-0 ${activeImage === img
+                        ? 'border-[#0A8F8A] shadow-md shadow-[#0A8F8A]/10'
+                        : 'border-[#E5E2DC] hover:border-[#0A8F8A]/40'
+                        }`}
                     >
                       <Image
                         src={img}
@@ -140,7 +139,7 @@ export default function ProductClient({ product }) {
               {/* Action Buttons */}
               <div className="flex gap-3 flex-wrap">
                 <a
-                  href={`https://wa.me/919876543210?text=I am interested in ${product.name}`}
+                  href={`https://wa.me/919327841813?text=I am interested in ${product.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-[13px] font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow transition-all duration-200"
@@ -186,9 +185,8 @@ export default function ProductClient({ product }) {
                         ([key, value], i) => (
                           <div
                             key={key}
-                            className={`flex items-start gap-4 px-5 py-4 border-b border-slate-100 last:border-b-0 ${
-                              i % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF9]'
-                            }`}
+                            className={`flex items-start gap-4 px-5 py-4 border-b border-slate-100 last:border-b-0 ${i % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF9]'
+                              }`}
                           >
                             <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wide w-2/5 flex-shrink-0 pt-0.5">
                               {key.replace(/_/g, ' ')}
@@ -277,11 +275,10 @@ export default function ProductClient({ product }) {
                 <button
                   key={i}
                   onClick={() => setActiveImage(img)}
-                  className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
-                    activeImage === img
-                      ? 'border-white'
-                      : 'border-white/20 hover:border-white/60'
-                  }`}
+                  className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === img
+                    ? 'border-white'
+                    : 'border-white/20 hover:border-white/60'
+                    }`}
                 >
                   <Image
                     src={img}

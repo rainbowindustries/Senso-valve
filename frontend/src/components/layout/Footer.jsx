@@ -234,7 +234,7 @@ export default function Footer() {
               <div className="text-[13px] font-semibold text-slate-800">+91 93278 41813</div>
             </div>
           </a>
-          <a href="mailto:info@vertexvalve.com" className="flex items-center gap-3 no-underline bg-white border border-slate-200/60 rounded-xl px-4 py-3 hover:bg-slate-100/60 transition-colors">
+          <a href="mailto:infovertexvalve78@gmail.com" className="flex items-center gap-3 no-underline bg-white border border-slate-200/60 rounded-xl px-4 py-3 hover:bg-slate-100/60 transition-colors">
             <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 shadow-sm border border-slate-100">
               <IconMail size={15} className="text-[#0A8F8A]" strokeWidth={1.6} />
             </div>

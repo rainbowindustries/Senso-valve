@@ -10,16 +10,15 @@ const industries = [
   { num: '02', icon: IconPill, name: 'Pharmaceutical', desc: 'Hygienic valves engineered for sterile process environments and FDA compliance.' },
   { num: '03', icon: IconDroplet, name: 'Water Treatment', desc: 'Municipal and industrial water distribution networks built for continuous duty.' },
   { num: '04', icon: IconBolt, name: 'Power Plants', desc: 'High-pressure steam and turbine control systems for critical energy infrastructure.' },
-  { num: '06', icon: IconAnchor, name: 'Marine', desc: 'Seawater and ballast system valve solutions certified for offshore environments.' },
   { num: '05', icon: IconBuildingFactory, name: 'Chemical', desc: 'Corrosion-resistant valve solutions for aggressive media across process industries.' },
+  { num: '06', icon: IconAnchor, name: 'Marine', desc: 'Seawater and ballast system valve solutions certified for offshore environments.' },
 ]
 
 // ── Client logos (Keeping natural colors) ───────────
 const clients = [
-  { name: 'Reliance Industries', src: '/download (2).png' },
+  { name: 'Reliance Industries', src: '/download (5).png' },
   { name: 'Adani Group', src: '/download (3).png' },
   { name: 'Tata Projects', src: '/download (4).png' },
-  { name: 'GAIL India', src: '/download (5).png' },
   { name: 'Hammer Valve', src: '/HammerValveLogo.webp' },
   { name: 'Essar Oil', src: null },
   { name: 'Bharat Petroleum', src: null },
@@ -42,7 +41,7 @@ function IndustryCard({ ind, delay, visible }) {
       }}
     >
       <div className="group relative h-full rounded-2xl overflow-hidden cursor-default border border-[#E5E2DC] bg-[#FAFAF8] p-5 sm:p-6 flex flex-col justify-between gap-5 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_1px_4px_rgba(0,0,0,0.03)] hover:bg-gradient-to-br hover:from-white hover:to-[#EBF5F4] hover:border-[#0A8F8A]/35 hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_16px_32px_rgba(10,143,138,0.12)]">
-        
+
         <div className="absolute top-0 left-0 w-full h-[3.5px] bg-transparent group-hover:bg-gradient-to-r group-hover:from-[#14B2AC] group-hover:to-[#EF8135] transition-all duration-[800ms] z-10" />
 
         <span className="absolute top-3 right-4 text-[56px] font-black leading-none select-none pointer-events-none text-[#0A8F8A]/[0.04] transition-all duration-[800ms] ease-[cubic-bezier(0.16, 1, 0.3, 1)] group-hover:text-[#0A8F8A]/[0.08] group-hover:scale-110 group-hover:translate-y-1">
@@ -51,10 +50,10 @@ function IndustryCard({ ind, delay, visible }) {
 
         <div className="flex flex-col gap-4 flex-1">
           <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[#EEF2F7] border border-[#C8D4E0] transition-all duration-[800ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group-hover:bg-[#0A8F8A]/10 group-hover:border-[#0A8F8A]/30 group-hover:scale-115 group-hover:rotate-[8deg] group-hover:shadow-[0_0_15px_rgba(10,143,138,0.15)]">
-            <Icon 
-              size={20} 
-              strokeWidth={1.8} 
-              className="text-[#4A7FA5] transition-all duration-[600ms] transform group-hover:text-[#0A8F8A] group-hover:scale-[1.05]" 
+            <Icon
+              size={20}
+              strokeWidth={1.8}
+              className="text-[#4A7FA5] transition-all duration-[600ms] transform group-hover:text-[#0A8F8A] group-hover:scale-[1.05]"
             />
           </div>
 

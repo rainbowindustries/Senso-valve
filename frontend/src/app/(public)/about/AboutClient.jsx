@@ -144,7 +144,7 @@ export default function AboutClient() {
       {/* ── SECTION 1: ABOUT VERTEX VALVE ─────────────── */}
       <section className="py-20 px-6 md:px-10 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          
+
           {/* Left Column: Image with Hover Glow */}
           <FadeUp delay={100} className="w-full">
             <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200/80 group">
@@ -171,7 +171,7 @@ export default function AboutClient() {
               </h2>
               <div className="text-[14px] text-slate-500 leading-relaxed flex flex-col gap-4">
                 <p>
-                  Established in <strong>2001</strong> in Rajkot, Gujarat, <strong>Vertex Valve (Define Industries)</strong> is a leading manufacturer and supplier of premium industrial valves, including Ball Valves, Gate Valves, Globe Valves, Check Valves, Butterfly Valves, and customized flow control solutions.
+                  Established in <strong>2001</strong> in Rajkot, Gujarat, <strong>Vertex Valve (Rainbow Industries)</strong> is a leading manufacturer and supplier of premium industrial valves, including Ball Valves, Gate Valves, Globe Valves, Check Valves, Butterfly Valves, and customized flow control solutions.
                 </p>
                 <p>
                   With a strong focus on precision engineering, high-grade certified materials, and customer satisfaction, we deliver reliable and durable industrial valve products built for a wide range of applications in Oil & Gas, Water Treatment, Power Plants, and Chemical Processing.
@@ -189,7 +189,7 @@ export default function AboutClient() {
       {/* ── SECTION 2: JOURNEY OF EXCELLENCE ──────────── */}
       <section className="py-20 px-6 md:px-10 bg-[#FAFAF8] border-t border-b border-[#EDEBE6]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          
+
           {/* Left Column: Journey Content */}
           <FadeUp delay={100} className="order-2 lg:order-1">
             <div>
@@ -311,7 +311,7 @@ export default function AboutClient() {
               </h2>
             </div>
           </FadeUp>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {certs.map((cert, i) => {
               const Icon = cert.icon
@@ -352,7 +352,7 @@ export default function AboutClient() {
               </h2>
             </div>
           </FadeUp>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {team.map((member, i) => (
               <FadeUp key={member.name} delay={i * 80}>

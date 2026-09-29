@@ -50,7 +50,7 @@ export default async function Home() {
       <HeroSection />
       <FeaturedProducts products={products} />
       <IndustriesServed />
-      <Certifications />
+      {/* <Certifications /> */}
     </main>
   )
 }

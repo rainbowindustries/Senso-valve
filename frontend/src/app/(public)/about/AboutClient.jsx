@@ -220,7 +220,7 @@ export default function AboutClient() {
           <FadeUp delay={200} className="order-1 lg:order-2">
             <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200/80 group">
               <img
-                src="/about-facility.png"
+                src="/VertexValvePrecision.jpg"
                 alt="Vertex Industrial Valve Manufacturing Facility in Rajkot"
                 className="w-full h-auto object-cover max-h-[460px] transform transition-transform duration-[1000ms] group-hover:scale-105"
               />

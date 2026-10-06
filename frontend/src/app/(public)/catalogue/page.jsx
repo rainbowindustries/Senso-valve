@@ -24,7 +24,7 @@ export const dynamic = 'force-dynamic'
 
 // Page Metadata
 export const metadata = {
-  title: 'Catalogues -',
+  title: 'Catalogues',
   description: 'Download official product catalogues, dimensions, pressure charts, and technical engineering datasheets for Ball Valves, Gate Valves, Globe Valves, Check Valves, and Butterfly Valves.',
   keywords: [
     'industrial valve catalogue',

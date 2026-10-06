@@ -22,7 +22,7 @@ async function getProduct(slug) {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const product = await getProduct(slug)
-  const titleName = product?.name ? `${product.name} - ` : 'Industrial Valve Product | Vertex Valve'
+  const titleName = product?.name || 'Product'
   const descriptionText = product?.description || `${product?.name || 'Industrial valve'} manufactured by Vertex Valve (Rainbow Industries) in Rajkot, India. High precision engineering for critical fluid flow applications.`
 
   return {

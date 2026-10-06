@@ -1,7 +1,7 @@
 import ApplicationClient from './ApplicationClient'
 
 export const metadata = {
-  title: 'Application -',
+  title: 'Application',
   description: 'Explore industrial valve applications for Oil & Gas, Water Treatment, Power Plants, Chemical Processing, and Pharma. High-performance Ball Valves, Gate Valves, Globe Valves, Check Valves, and Butterfly Valves.',
   keywords: [
     'industrial valve applications',

@@ -103,7 +103,8 @@ export default function HeroSection() {
     <section className="font-sans antialiased overflow-hidden bg-white">
 
       {/* ─── Native CSS Keyframe Injection (Prevents styled-jsx compiler issues) ─── */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-10px) rotate(0.8deg); }
@@ -144,7 +145,7 @@ export default function HeroSection() {
 
       {/* ─── HERO CONTENT ─── */}
       <div className="relative min-h-[82vh] lg:min-h-[88vh] flex flex-col justify-between pt-10">
-        
+
         {/* Ambient background graphics */}
         <div className="absolute right-0 top-0 w-[550px] h-[550px] bg-[#0A8F8A]/[0.02] rounded-full blur-3xl pointer-events-none" />
         <div className="absolute left-[-100px] bottom-0 w-[450px] h-[450px] bg-[#EF8135]/[0.01] rounded-full blur-3xl pointer-events-none" />
@@ -152,10 +153,10 @@ export default function HeroSection() {
         {/* Main Grid Content */}
         <div className="flex-1 max-w-[1280px] w-full mx-auto px-6 sm:px-8 lg:px-10 flex items-center py-10 lg:py-16 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full">
-            
+
             {/* Left Side: Staggered Content (6 columns - exactly half) */}
             <div className="lg:col-span-6 flex flex-col gap-6">
-              
+
               {/* Tagline Badge */}
               <div
                 className="flex items-center gap-2"
@@ -208,12 +209,12 @@ export default function HeroSection() {
 
             {/* Right Side: Layered Background and Floating Valve Photo (6 columns - exactly half) */}
             <div className="lg:col-span-6 flex justify-center items-center relative py-12">
-              
+
               {/* Layer 1: Ambient Base Glow */}
               <div className="absolute w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] bg-[#0A8F8A]/5 rounded-full blur-3xl opacity-60 z-0 pointer-events-none" />
 
               {/* Layer 2: concentric border rotating circle */}
-              <div 
+              <div
                 className="w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] lg:w-[540px] lg:h-[540px] border border-[#0A8F8A]/15 rounded-full absolute z-0 pointer-events-none animate-spin-slow"
                 style={{
                   opacity: photoLoaded ? 1 : 0,
@@ -223,8 +224,8 @@ export default function HeroSection() {
               />
 
               {/* Layer 3: solid background gradient canvas */}
-              <div 
-                className="w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[480px] lg:h-[480px] bg-gradient-to-tr from-[#EBF5F4] to-[#0A8F8A]/10 rounded-full absolute z-0 pointer-events-none shadow-[inset_0_4px_12px_rgba(10,143,138,0.05)]" 
+              <div
+                className="w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[480px] lg:h-[480px] bg-gradient-to-tr from-[#EBF5F4] to-[#0A8F8A]/10 rounded-full absolute z-0 pointer-events-none shadow-[inset_0_4px_12px_rgba(10,143,138,0.05)]"
                 style={{
                   opacity: photoLoaded ? 1 : 0,
                   transform: photoLoaded ? 'scale(1)' : 'scale(0.75)',
@@ -236,7 +237,7 @@ export default function HeroSection() {
               <div className={`relative z-10 w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[460px] ${photoLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
                 <div className="animate-float">
                   <img
-                    src="https://sensovalves.com/wp-content/uploads/2026/07/ChatGPT-Image-Jul-16-2026-12_19_28-AM-825x825.webp"
+                    src="/VertexValve2.png"
                     alt="Precision Ball Valve Render"
                     className="w-full h-auto object-contain transition-transform duration-500"
                   />
@@ -265,7 +266,7 @@ export default function HeroSection() {
       <div className="bg-[#FAFAF8] border-b border-[#E5E2DC] py-8 px-6 sm:px-10 lg:px-12">
         <div className="max-w-[1280px] mx-auto">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between">
-            
+
             {/* Title / Badge */}
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-[#0A8F8A]/10 flex items-center justify-center">

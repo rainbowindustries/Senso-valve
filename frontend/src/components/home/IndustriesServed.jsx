@@ -20,11 +20,11 @@ const clients = [
   { name: 'Adani Group', src: '/download (3).png' },
   { name: 'Tata Projects', src: '/download (4).png' },
   { name: 'Hammer Valve', src: '/HammerValveLogo.webp' },
-  { name: 'Essar Oil', src: null },
-  { name: 'Bharat Petroleum', src: null },
-  { name: 'Hindustan Zinc', src: null },
-  { name: 'Vedanta', src: null },
-  { name: 'NTPC', src: null },
+  { name: 'Essar Oil', src: '/Essar oil.jpg' },
+  { name: 'Indian Oil', src: '/indian oil.webp' },
+  { name: 'CPCL', src: '/cpcl.webp' },
+  { name: 'NTPC', src:  '/NTPC.webp' },
+  { name: 'HP', src:  '/Hp.webp' },
 ]
 
 // ── Industry Card Component (Light Theme Hover) ────

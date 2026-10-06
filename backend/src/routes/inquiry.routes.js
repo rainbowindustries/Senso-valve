@@ -5,7 +5,8 @@ import {
     getInquiryById,
     markAsRead,
     deleteInquiry,
-    getUnreadCount
+    getUnreadCount,
+    getInquiryStats
 } from '../controllers/inquiry.controller.js'
 import { verifyAdmin } from '../middlewares/auth.middleware.js'
 
@@ -17,6 +18,7 @@ router.post('/', createInquiry)
 // Protected admin routes
 router.get('/', verifyAdmin, getAllInquiries)
 router.get('/unread-count', verifyAdmin, getUnreadCount)
+router.get('/stats', verifyAdmin, getInquiryStats)
 router.get('/:id', verifyAdmin, getInquiryById)
 router.patch('/:id/read', verifyAdmin, markAsRead)
 router.delete('/:id', verifyAdmin, deleteInquiry)

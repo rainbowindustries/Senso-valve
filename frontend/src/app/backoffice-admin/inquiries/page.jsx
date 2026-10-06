@@ -12,12 +12,24 @@ import {
   IconSquareCheck,
   IconSquareCheckFilled,
   IconArrowLeft,
+  IconBrandWhatsapp,
+  IconExternalLink,
 } from '@tabler/icons-react'
+
+// Source label mapping
+const sourceLabels = {
+  contact_form: { label: 'Contact Form', icon: '📋', color: 'bg-blue-50 text-blue-600 border-blue-100' },
+  whatsapp: { label: 'WhatsApp', icon: '💬', color: 'bg-green-50 text-green-600 border-green-100' },
+  email: { label: 'Email', icon: '✉️', color: 'bg-purple-50 text-purple-600 border-purple-100' },
+  phone: { label: 'Phone', icon: '📞', color: 'bg-amber-50 text-amber-600 border-amber-100' },
+  product_inquiry: { label: 'Product Page', icon: '🔧', color: 'bg-teal-50 text-teal-600 border-teal-100' },
+}
 
 export default function AdminInquiriesPage() {
   const [inquiries, setInquiries] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
+  const [sourceFilter, setSourceFilter] = useState('all')
   const [selected, setSelected] = useState(null)
   const [deleting, setDeleting] = useState(null)
   const [checked, setChecked] = useState([])
@@ -28,14 +40,17 @@ export default function AdminInquiriesPage() {
 
   useEffect(() => {
     fetchInquiries()
-  }, [filter])
+  }, [filter, sourceFilter])
 
   const fetchInquiries = async () => {
     const token = localStorage.getItem('adminToken')
     try {
       let url = `${apiUrl}/inquiries`
-      if (filter === 'unread') url += '?is_read=false'
-      if (filter === 'read') url += '?is_read=true'
+      const params = []
+      if (filter === 'unread') params.push('is_read=false')
+      if (filter === 'read') params.push('is_read=true')
+      if (sourceFilter !== 'all') params.push(`source=${sourceFilter}`)
+      if (params.length > 0) url += '?' + params.join('&')
 
       const res = await fetch(url, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -159,6 +174,15 @@ export default function AdminInquiriesPage() {
     }
   }
 
+  // Build WhatsApp follow-up URL
+  const getWhatsAppUrl = (inq) => {
+    if (!inq?.phone) return null
+    const cleanPhone = inq.phone.replace(/\D/g, '')
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
+      `Hello ${inq.name}, thank you for contacting Vertex Valve. We received your inquiry and our engineering team will assist you shortly.`
+    )}`
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -209,6 +233,7 @@ export default function AdminInquiriesPage() {
             </button>
           )}
 
+          {/* Read/Unread filter */}
           <div className="flex items-center gap-1.5">
             <IconFilter size={13} className="text-slate-400 hidden sm:block" />
             {['all', 'unread', 'read'].map((f) => (
@@ -224,6 +249,22 @@ export default function AdminInquiriesPage() {
                 {f}
               </button>
             ))}
+          </div>
+
+          {/* Source filter */}
+          <div className="flex items-center gap-1.5">
+            <select
+              value={sourceFilter}
+              onChange={(e) => setSourceFilter(e.target.value)}
+              className="text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-500 hover:border-slate-300 transition-colors cursor-pointer"
+            >
+              <option value="all">All sources</option>
+              <option value="contact_form">📋 Contact Form</option>
+              <option value="product_inquiry">🔧 Product Page</option>
+              <option value="whatsapp">💬 WhatsApp</option>
+              <option value="email">✉️ Email</option>
+              <option value="phone">📞 Phone</option>
+            </select>
           </div>
         </div>
       </div>
@@ -268,77 +309,85 @@ export default function AdminInquiriesPage() {
               </p>
             </div>
           ) : (
-            inquiries.map((inq) => (
-              <div
-                key={inq.id}
-                className={`flex items-start gap-1 sm:gap-2 bg-white border rounded-xl transition-all min-w-0 ${
-                  selected?.id === inq.id
-                    ? 'border-blue-400 bg-blue-50'
-                    : checked.includes(inq.id)
-                    ? 'border-blue-200 bg-blue-50/50'
-                    : 'border-slate-200 hover:border-slate-300'
-                }`}
-              >
-                <button
-                  onClick={() => toggleCheck(inq.id)}
-                  className="flex-shrink-0 pt-4 pl-2 sm:pl-3"
+            inquiries.map((inq) => {
+              const srcInfo = sourceLabels[inq.source] || sourceLabels.contact_form
+              return (
+                <div
+                  key={inq.id}
+                  className={`flex items-start gap-1 sm:gap-2 bg-white border rounded-xl transition-all min-w-0 ${
+                    selected?.id === inq.id
+                      ? 'border-blue-400 bg-blue-50'
+                      : checked.includes(inq.id)
+                      ? 'border-blue-200 bg-blue-50/50'
+                      : 'border-slate-200 hover:border-slate-300'
+                  }`}
                 >
-                  {checked.includes(inq.id) ? (
-                    <IconSquareCheckFilled size={15} className="text-blue-500" />
-                  ) : (
-                    <IconSquare size={15} className="text-slate-300 hover:text-slate-400" />
-                  )}
-                </button>
+                  <button
+                    onClick={() => toggleCheck(inq.id)}
+                    className="flex-shrink-0 pt-4 pl-2 sm:pl-3"
+                  >
+                    {checked.includes(inq.id) ? (
+                      <IconSquareCheckFilled size={15} className="text-blue-500" />
+                    ) : (
+                      <IconSquare size={15} className="text-slate-300 hover:text-slate-400" />
+                    )}
+                  </button>
 
-                <button
-                  onClick={() => openInquiry(inq)}
-                  className="flex-1 text-left p-2.5 sm:p-3 pl-1 min-w-0 overflow-hidden"
-                >
-                  <div className="flex items-start justify-between gap-2 mb-1 min-w-0">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      {!inq.is_read && (
-                        <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-0.5" />
-                      )}
-                      <span className={`text-[13px] truncate ${!inq.is_read ? 'font-medium text-slate-900' : 'text-slate-600'}`}>
-                        {inq.name}
+                  <button
+                    onClick={() => openInquiry(inq)}
+                    className="flex-1 text-left p-2.5 sm:p-3 pl-1 min-w-0 overflow-hidden"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1 min-w-0">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        {!inq.is_read && (
+                          <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-0.5" />
+                        )}
+                        <span className={`text-[13px] truncate ${!inq.is_read ? 'font-medium text-slate-900' : 'text-slate-600'}`}>
+                          {inq.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium border ${srcInfo.color}`}>
+                          {srcInfo.icon}
+                        </span>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full flex-shrink-0 ${
+                          inq.is_read
+                            ? 'bg-slate-100 text-slate-400'
+                            : 'bg-blue-50 text-blue-500 border border-blue-100'
+                        }`}>
+                          {inq.is_read ? 'Read' : 'New'}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-[12px] text-slate-400 truncate">
+                      {inq.message}
+                    </p>
+                    <div className="flex items-center gap-1 mt-1.5">
+                      <IconClock size={11} className="text-slate-300 flex-shrink-0" />
+                      <span className="text-[11px] text-slate-300 truncate">
+                        {new Date(inq.created_at).toLocaleDateString('en-IN', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
+                        })}
                       </span>
                     </div>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full flex-shrink-0 ${
-                      inq.is_read
-                        ? 'bg-slate-100 text-slate-400'
-                        : 'bg-blue-50 text-blue-500 border border-blue-100'
-                    }`}>
-                      {inq.is_read ? 'Read' : 'New'}
-                    </span>
-                  </div>
-                  <p className="text-[12px] text-slate-400 truncate">
-                    {inq.message}
-                  </p>
-                  <div className="flex items-center gap-1 mt-1.5">
-                    <IconClock size={11} className="text-slate-300 flex-shrink-0" />
-                    <span className="text-[11px] text-slate-300 truncate">
-                      {new Date(inq.created_at).toLocaleDateString('en-IN', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric'
-                      })}
-                    </span>
-                  </div>
-                </button>
+                  </button>
 
-                <button
-                  onClick={() => deleteInquiry(inq.id)}
-                  disabled={deleting === inq.id}
-                  className="flex-shrink-0 pt-3 pr-2 sm:pr-3 text-slate-300 hover:text-red-400 transition-colors disabled:opacity-50"
-                >
-                  {deleting === inq.id ? (
-                    <div className="w-3.5 h-3.5 border border-red-300/30 border-t-red-300 rounded-full animate-spin" />
-                  ) : (
-                    <IconTrash size={14} />
-                  )}
-                </button>
-              </div>
-            ))
+                  <button
+                    onClick={() => deleteInquiry(inq.id)}
+                    disabled={deleting === inq.id}
+                    className="flex-shrink-0 pt-3 pr-2 sm:pr-3 text-slate-300 hover:text-red-400 transition-colors disabled:opacity-50"
+                  >
+                    {deleting === inq.id ? (
+                      <div className="w-3.5 h-3.5 border border-red-300/30 border-t-red-300 rounded-full animate-spin" />
+                    ) : (
+                      <IconTrash size={14} />
+                    )}
+                  </button>
+                </div>
+              )
+            })
           )}
         </div>
 
@@ -369,14 +418,26 @@ export default function AdminInquiriesPage() {
                     </span>
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[14px] font-medium text-slate-900 truncate">
-                      {selected.name}
+                    <div className="flex items-center gap-2">
+                      <div className="text-[14px] font-medium text-slate-900 truncate">
+                        {selected.name}
+                      </div>
+                      {(() => {
+                        const srcInfo = sourceLabels[selected.source] || sourceLabels.contact_form
+                        return (
+                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium border flex-shrink-0 ${srcInfo.color}`}>
+                            {srcInfo.icon} {srcInfo.label}
+                          </span>
+                        )
+                      })()}
                     </div>
                     <div className="text-[11px] text-slate-400">
                       {new Date(selected.created_at).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
                       })}
                     </div>
                   </div>
@@ -455,25 +516,40 @@ export default function AdminInquiriesPage() {
                 )}
               </div>
 
-              {/* Reply */}
-              <div className="px-4 sm:px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
-                <a
-                  href={`mailto:${selected.email}?subject=Re: Your inquiry about ${selected.products?.name || 'our products'}`}
-                  className="flex items-center justify-center gap-2 bg-[#1e3a5f] hover:bg-[#162d4a] text-white text-[13px] font-medium px-4 py-2 rounded-lg transition-colors"
-                >
-                  <IconMail size={14} />
-                  Reply via email
-                </a>
-                {selected.phone && (
+              {/* Reply actions */}
+              <div className="px-4 sm:px-6 py-4 bg-slate-50 border-t border-slate-100">
+                <p className="text-[11px] text-slate-400 uppercase tracking-wider font-medium mb-3">
+                  Reply to customer
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href={`https://wa.me/${selected.phone.replace(/\D/g, '')}?text=Hello ${selected.name}, thank you for your inquiry.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white text-[13px] font-medium px-4 py-2 rounded-lg transition-colors"
+                    href={`mailto:${selected.email}?subject=Re: Your inquiry about ${selected.products?.name || 'our products'}&body=Dear ${selected.name},%0A%0AThank you for contacting Vertex Valve.%0A%0A`}
+                    className="flex items-center justify-center gap-2 bg-[#1e3a5f] hover:bg-[#162d4a] text-white text-[13px] font-medium px-4 py-2.5 rounded-lg transition-colors"
                   >
-                    WhatsApp reply
+                    <IconMail size={14} />
+                    Reply via email
                   </a>
-                )}
+                  {selected.phone && (
+                    <>
+                      <a
+                        href={getWhatsAppUrl(selected)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white text-[13px] font-medium px-4 py-2.5 rounded-lg transition-colors"
+                      >
+                        <IconBrandWhatsapp size={14} />
+                        WhatsApp reply
+                      </a>
+                      <a
+                        href={`tel:${selected.phone}`}
+                        className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-[13px] font-medium px-4 py-2.5 rounded-lg transition-colors"
+                      >
+                        <IconPhone size={14} />
+                        Call now
+                      </a>
+                    </>
+                  )}
+                </div>
               </div>
 
             </div>

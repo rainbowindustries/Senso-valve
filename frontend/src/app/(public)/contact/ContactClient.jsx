@@ -58,6 +58,7 @@ function InquiryForm() {
   const [form, setForm] = useState({
     name: '', email: '', phone: '', company: '', message: '',
     product_id: '',
+    source: 'contact_form',
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -70,6 +71,7 @@ function InquiryForm() {
         ...prev,
         message: `I am interested in ${productName}. Please share technical specifications, valve pressure ratings, and pricing details.`,
         product_id: productId || '',
+        source: 'product_inquiry',
       }))
       setActiveProductName(productName)
     }
@@ -80,13 +82,31 @@ function InquiryForm() {
   }
 
   const clearProduct = () => {
-    setForm(prev => ({ ...prev, message: '', product_id: '' }))
+    setForm(prev => ({ ...prev, message: '', product_id: '', source: 'contact_form' }))
     setActiveProductName(null)
     window.history.replaceState({}, '', '/contact')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    // Strong Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.email)) {
+      setError('Please enter a valid email address.')
+      return
+    }
+
+    if (form.phone) {
+      // Allows optional +, spaces, hyphens, and requires 7-15 digits total
+      const phoneRegex = /^\+?[\d\s\-]{7,15}$/
+      const digitCount = (form.phone.match(/\d/g) || []).length
+      if (!phoneRegex.test(form.phone) || digitCount < 7 || digitCount > 15) {
+        setError('Please enter a valid real phone number (7-15 digits).')
+        return
+      }
+    }
+
     setLoading(true)
     setError('')
     try {
@@ -102,7 +122,7 @@ function InquiryForm() {
       const data = await res.json()
       if (data.success) {
         setSuccess(true)
-        setForm({ name: '', email: '', phone: '', company: '', message: '', product_id: '' })
+        setForm({ name: '', email: '', phone: '', company: '', message: '', product_id: '', source: 'contact_form' })
       } else {
         setError(data.message || 'Something went wrong')
       }

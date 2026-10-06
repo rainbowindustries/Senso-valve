@@ -16,7 +16,7 @@ async function getGalleryImages() {
 }
 
 export const metadata = {
-  title: 'Gallery -',
+  title: 'Gallery',
   description: 'View photos of our industrial valve manufacturing facility in Rajkot, CNC machinery, quality testing lab, and manufactured Ball, Gate, Globe, Check, and Butterfly Valves.',
   keywords: [
     'valve factory gallery',

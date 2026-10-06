@@ -18,8 +18,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vertexvalve.com
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Vertex Valve | Industrial Valve Manufacturer & Exporter ',
-    template: '%s Vertex Valve'
+    default: 'Vertex Valve',
+    template: '%s - Vertex Valve'
   },
   description: 'Vertex Valve (Rainbow Industries) is a premier industrial valve manufacturer in Rajkot, India. We produce certified high-pressure Ball Valves, Gate Valves, Globe Valves, Check Valves, Butterfly Valves, and custom flow control engineering for Oil & Gas, Water Treatment, Chemical & Power industries.',
   keywords: [

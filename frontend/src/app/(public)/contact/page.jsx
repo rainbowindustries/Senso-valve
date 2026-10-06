@@ -1,7 +1,7 @@
 import ContactClient from './ContactClient'
 
 export const metadata = {
-  title: 'Contact -',
+  title: 'Contact',
   description: 'Contact Vertex Valve (Rainbow Industries) for industrial valve inquiries, technical datasheets, valve quotes, and custom valve manufacturing requests in Rajkot, Gujarat.',
   keywords: [
     'contact vertex valve',

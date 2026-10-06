@@ -22,7 +22,7 @@ export const dynamic = 'force-dynamic'
 
 // Page Metadata
 export const metadata = {
-  title: 'Products - Vertex Valve',
+  title: 'Products',
   description: 'Browse our complete catalog of industrial valves manufactured in India. Certified Ball Valves, Gate Valves, Globe Valves, Check Valves, Butterfly Valves, and automated flow control systems.',
   keywords: [
     'industrial valves catalogue',

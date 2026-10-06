@@ -155,7 +155,7 @@ export default function HeroSection() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full">
 
             {/* Left Side: Staggered Content (6 columns - exactly half) */}
-            <div className="lg:col-span-6 flex flex-col gap-6">
+            <div className="order-2 lg:order-1 lg:col-span-6 flex flex-col gap-6">
 
               {/* Tagline Badge */}
               <div
@@ -208,7 +208,7 @@ export default function HeroSection() {
             </div>
 
             {/* Right Side: Layered Background and Floating Valve Photo (6 columns - exactly half) */}
-            <div className="lg:col-span-6 flex justify-center items-center relative py-12">
+            <div className="order-1 lg:order-2 lg:col-span-6 flex justify-center items-center relative py-12">
 
               {/* Layer 1: Ambient Base Glow */}
               <div className="absolute w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] bg-[#0A8F8A]/5 rounded-full blur-3xl opacity-60 z-0 pointer-events-none" />

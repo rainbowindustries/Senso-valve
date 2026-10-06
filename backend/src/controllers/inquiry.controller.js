@@ -4,8 +4,8 @@ import { ApiResponse } from '../utils/ApiResponse.js'
 import supabase from '../config/supabase.js'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-const ADMIN_PHONE = process.env.ADMIN_PHONE || '919327841813'
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : { emails: { send: async () => console.warn("Resend API key missing, skipping email notification") } }
+const ADMIN_PHONE = process.env.ADMIN_PHONE || '9327841813'
 
 // ─── Create Inquiry (Public) ───────────────────────
 const createInquiry = asyncHandler(async (req, res) => {
